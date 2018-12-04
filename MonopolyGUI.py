@@ -19,6 +19,6 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 running = False
 
-        screen.blit(bg, [0,0])
-        a1 = pygame.draw.circle(screen, (255,0,0), (375, 55), 20, 0)
+        screen.blit(bg, [0, 0])
+        a1 = pygame.draw.circle(screen, (255, 0, 0), (375, 55), 20, 0)
         pygame.display.flip()
