@@ -53,9 +53,28 @@ class Player:
         if self.number == 4:
             self.pawnColor = YELLOW
 
+    def takeTurn(self, numTurns):                       # print menu for each players turn and add one to turnsTaken and work as the way for the turn to be taken
+        takingTurn = True                               # true until turn is over
+        numTurns = numTurns + 1                         #
+        while takingTurn:
+            pos = pygame.mouse.get_pos()
+            RollDice = button(BLUE, 100, 754, 100, 50, "ROLL DICE")
+            RollDice.draw(screen)
+            BuyHouses = button(BLUE, 200, 754, 100, 50, "BUY HOUSES")
+            BuyHouses.draw(screen)
+            if event.type == pygame.MOUSEBUTTONDOWN:    # roll dice has been pushed
+                if RollDice.isOver(pos):
+                    print("Rolled Dice")
+
+            if event.type == pygame.MOUSEBUTTONDOWN:    # buy houses has been pushed
+                if BuyHouses.isOver(pos):
+                    print("Buying Houses")
+
+            return numTurns
+
 
 if __name__ == "__main__":
-    players = []                #array of players
+    players = []                                        #array of players
     playerOne = Player(1)
     playerTwo = Player(2)
     playerThree = Player(3)
@@ -66,12 +85,13 @@ if __name__ == "__main__":
     bg = pygame.image.load("monopoly.jpg")
     gameHasStarted = False                              #initialize that the game hasnt started
     numPlayersChosen = False                            #initialize that number of players hasnt been chosen
-    numPlayers = 0                                      #intialized to 0 for no reason, just to have value
+    numPlayers = 0                                      #initialized to 0 for no reason, just to have value
+    turnsTaken = 0                                      #initialized to 0 so you can mod by the number of players to get whose turn it is
     running = True
     print("Started Running main loop")
     while running:
-        screen.blit(bg, [0, 0])
-        print("Painting Background")
+        screen.blit(bg, [0, 0])                         #paint the backgorund image in the back first so it doesnt cover anything
+        print("Painting Background")                    #debug comment
         for event in pygame.event.get():                #end python interpretter if window has been closed
             pos = pygame.mouse.get_pos()
             if event.type == pygame.QUIT:
@@ -93,10 +113,6 @@ if __name__ == "__main__":
                 pressedKey = pygame.key.get_pressed()
                 howManyPlayers = button((0, 0, 0), 752/2, 754/4 * 3 - 50, 0, 0, "How many Players?(1-4)")
                 howManyPlayers.draw(screen)
-                if pressedKey[K_1]:
-                    numPlayers = 1
-                    numPlayersChosen = True
-
                 if pressedKey[K_2]:
                     numPlayers = 2
                     numPlayersChosen = True
@@ -109,8 +125,9 @@ if __name__ == "__main__":
                     numPlayers = 4
                     numPlayersChosen = True
 
-            if numPlayersChosen:
-                
+            if numPlayersChosen:                            #this is where the game should start
+                playerOne.takeTurn(turnsTaken)
+
 
         def position(p):
             if p.position == 1:
