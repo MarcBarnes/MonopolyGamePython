@@ -1,4 +1,5 @@
 import sys, pygame, random
+from pygame.locals import *
 pygame.init()
 
 BLUE = (0,   0, 255)
@@ -63,13 +64,14 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode((width, height))
     startButton = button((0, 255, 255), 752/2 - 50, 754/2 - 50, 100, 50, "Start")
     bg = pygame.image.load("monopoly.jpg")
-    gameHasStarted = False      #initialize that the game hasnt started
-    numPlayersChosen = False    #initialize that number of players hasnt been chosen
+    gameHasStarted = False                              #initialize that the game hasnt started
+    numPlayersChosen = False                            #initialize that number of players hasnt been chosen
+    numPlayers = 0                                      #intialized to 0 for no reason, just to have value
     running = True
+    print("Started Running main loop")
     while running:
         screen.blit(bg, [0, 0])
         print("Painting Background")
-        print("Started Running")
         for event in pygame.event.get():                #end python interpretter if window has been closed
             pos = pygame.mouse.get_pos()
             if event.type == pygame.QUIT:
@@ -88,9 +90,27 @@ if __name__ == "__main__":
         if gameHasStarted:
             if numPlayersChosen == False:
                 print("Drawing howManyPlayers text")
-                howManyPlayers = button((0, 0, 0), 752/2 - 50, 754/4 * 3 - 50, 0, 0, "How many Players?")
+                pressedKey = pygame.key.get_pressed()
+                howManyPlayers = button((0, 0, 0), 752/2, 754/4 * 3 - 50, 0, 0, "How many Players?(1-4)")
                 howManyPlayers.draw(screen)
+                if pressedKey[K_1]:
+                    numPlayers = 1
+                    numPlayersChosen = True
 
+                if pressedKey[K_2]:
+                    numPlayers = 2
+                    numPlayersChosen = True
+
+                if pressedKey[K_3]:
+                    numPlayers = 3
+                    numPlayersChosen = True
+
+                if pressedKey[K_4]:
+                    numPlayers = 4
+                    numPlayersChosen = True
+
+            if numPlayersChosen:
+                
 
         def position(p):
             if p.position == 1:
@@ -218,6 +238,6 @@ if __name__ == "__main__":
         # a38 = pygame.draw.circle(screen, (255, 0, 0), (700, 505), 20, 0)
         # a39 = pygame.draw.circle(screen, (255, 0, 0), (700, 560), 20, 0)
         # a40 = pygame.draw.circle(screen, (255, 0, 0), (700, 625), 20, 0)
-
+        #flip and update go last always
         pygame.display.flip()
         pygame.display.update()
