@@ -54,31 +54,43 @@ class Player:
 
 
 if __name__ == "__main__":
+    players = []                #array of players
     playerOne = Player(1)
     playerTwo = Player(2)
     playerThree = Player(3)
     playerFour = Player(4)
-
-    width, height = 752, 754
+    width, height = 752, 800    #set size of the window. The size of the image is 752,754 but I went to 800 to add space for buttons
     screen = pygame.display.set_mode((width, height))
     startButton = button((0, 255, 255), 752/2 - 50, 754/2 - 50, 100, 50, "Start")
     bg = pygame.image.load("monopoly.jpg")
-    gameHasStarted = False
+    gameHasStarted = False      #initialize that the game hasnt started
+    numPlayersChosen = False    #initialize that number of players hasnt been chosen
     running = True
     while running:
-        pygame.display.update()
-        for event in pygame.event.get():
+        screen.blit(bg, [0, 0])
+        print("Painting Background")
+        print("Started Running")
+        for event in pygame.event.get():                #end python interpretter if window has been closed
             pos = pygame.mouse.get_pos()
             if event.type == pygame.QUIT:
                 running = False
+                quit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:    #start has been pushed
                 if startButton.isOver(pos):
                     gameHasStarted = True
                     print("Game has started")
 
-        screen.blit(bg, [0,0])
-        pygame.display.flip()
+        if gameHasStarted == False:
+            print("Drawing start button")
+            startButton.draw(screen)
+
+        if gameHasStarted:
+            if numPlayersChosen == False:
+                print("Drawing howManyPlayers text")
+                howManyPlayers = button((0, 0, 0), 752/2 - 50, 754/4 * 3 - 50, 0, 0, "How many Players?")
+                howManyPlayers.draw(screen)
+
 
         def position(p):
             if p.position == 1:
@@ -162,14 +174,10 @@ if __name__ == "__main__":
             if p.position == 40:
                 a40 = pygame.draw.circle(screen, p.pawnColor, (700, 625), 20, 0)
 
-        if False == gameHasStarted:
-            startButton.draw(screen)
-
         position(playerOne)
         position(playerTwo)
         position(playerThree)
         position(playerFour)
-
         # a1 = pygame.draw.circle(screen, (255,0,0), (700, 700), 20, 0)
         # a2 = pygame.draw.circle(screen, (255, 0, 0), (630, 700), 20, 0)
         # a3 = pygame.draw.circle(screen, (255, 0, 0), (565, 700), 20, 0)
@@ -212,3 +220,4 @@ if __name__ == "__main__":
         # a40 = pygame.draw.circle(screen, (255, 0, 0), (700, 625), 20, 0)
 
         pygame.display.flip()
+        pygame.display.update()
