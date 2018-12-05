@@ -40,6 +40,10 @@ class button():
 
 
 class Player:
+
+# create moveTo func
+# buy hotel func
+# buy house func
     def __init__(self, number):
         self.position = random.randint(1,40)
         self.number = number
@@ -48,18 +52,43 @@ class Player:
 
         if self.number == 1:
             self.pawnColor = BLUE
-        if self.number == 2:
+        elif self.number == 2:
             self.pawnColor = GREEN
-        if self.number == 3:
+        elif self.number == 3:
             self.pawnColor = RED
-        if self.number == 4:
+        elif self.number == 4:
             self.pawnColor = YELLOW
 
     def isPlayerBankrupt(self):
         return self.isPlayerBankrupt
 
     def payRent(self, name):
-        if self.number == EstateDict[name]['']
+        if self.isPlayerBankrupt:
+            return False
+        elif self.number == EstateDict[name]['ownerNumber']:     # they own it
+            return True
+        elif EstateDict[name]['rent'] <= self.money:           # they don't own it but they have the money to pay for it
+            self.money = self.money - EstateDict[name]['rent']
+        elif EstateDict[name]['rent'] > self.money:             # if they don't have the money, mortgage off properties
+            self.mortgageProperty(name)
+# revisit the logic on this, bc we have a func calling a func, when we get to mortgageProp calling payRent, will it return to where it was w/i mortgageProp?
+    def mortgageProperty(self, name):
+        for property in EstateDict:
+            if property['ownerNumber'] == self.number:
+                if property['hotel'] > 0:                       # mortgages hotel
+                    self.money = self.money + property['houseValue']
+                    property['hotel'] = 0
+                    self.payRent(name)
+                elif property['houses'] > 0:                    # mortgages houses
+                    self.money = self.money + property['houseValule']
+                    property['houses'] = property['houses'] - 1
+                    self.payRent(name)
+                elif property['mortgaged'] == 0:                # mortgages property itself
+                    self.money = self.money + property['mortgageValue']
+                    property['mortgaged'] = 1
+                    self.payRent(name)
+        self.isPlayerBankrupt = True                            # if we exit for
+
 
     def getMoney(self):
         return self.money
