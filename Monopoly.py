@@ -1,4 +1,5 @@
 import sys, pygame, random
+from RealEstateDictionary import EstateDict
 pygame.init()
 
 BLUE = (0,   0, 255)
@@ -42,6 +43,8 @@ class Player:
     def __init__(self, number):
         self.position = random.randint(1,40)
         self.number = number
+        self.isPlayerBankrupt = False
+        self.money = 1500
 
         if self.number == 1:
             self.pawnColor = BLUE
@@ -52,6 +55,31 @@ class Player:
         if self.number == 4:
             self.pawnColor = YELLOW
 
+    def isPlayerBankrupt(self):
+        return self.isPlayerBankrupt
+
+    def payRent(self, name):
+        if self.number == EstateDict[name]['']
+
+    def getMoney(self):
+        return self.money
+
+    def buyProperty(self, name):
+        if EstateDict[name]['available'] == 1 and self.money >= EstateDict[name]['price']:
+            self.money = self.money - EstateDict[name]['price']
+            EstateDict[name]['ownerNumber'] = self.number
+            return True
+        else:
+            return False
+
+    def isPropertyOwner(self, name):
+        if EstateDict[name]['ownerNumber'] == self.number:
+            return True
+        return False
+
+
+
+
 
 if __name__ == "__main__":
     playerOne = Player(1)
@@ -61,7 +89,7 @@ if __name__ == "__main__":
 
     width, height = 752, 754
     screen = pygame.display.set_mode((width, height))
-    startButton = button((255, 255, 255), 100, 100, 100, 100, "Start")
+
     bg = pygame.image.load("monopoly.jpg")
 
     running = True
@@ -75,7 +103,6 @@ if __name__ == "__main__":
                 if startButton.isOver(pos):
                     print("Game has started")
 
-        startButton.draw(screen)
         pygame.display.update()
 
         screen.blit(bg, [0,0])
