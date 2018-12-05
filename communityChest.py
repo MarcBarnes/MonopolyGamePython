@@ -26,7 +26,7 @@ class communityChest:
              communityChestCard('cash',random.choice(CASH)),
              communityChestCard('cash',random.choice(CASH)),
              communityChestCard('give', 10), #to every other player
-             communityChestCard('receive', 10) #to every other player
+             communityChestCard('receive', 10), #to every other player
              communityChestCard('cash',random.choice(CASH)),
              communityChestCard('give', 10), #to every other player
              communityChestCard('receive', 10) #to every other player
