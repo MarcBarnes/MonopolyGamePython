@@ -8,19 +8,13 @@ YELLOW = (255, 255, 0)
 GRAY = (211, 211, 211)
 WHITE = (0, 0, 0)
 
-
-if __name__ == "__main__":
-    width, height = 752, 754
-    screen = pygame.display.set_mode((width, height))
-
-class numberPlayersButton():
+class NumberPlayersButton(object):
     def __init__(self, btnText, xPos, yPos, width, height):
         self.btnText = btnText
         self.xPos = xPos
         self.yPos = yPos
         self.width = width
         self.height = height
-
         self.btn = pygame.Surface((self.width, self.height))
         self.btn.fill(GRAY)
         self.rect = self.image.get_rect()
@@ -28,7 +22,8 @@ class numberPlayersButton():
         font = pygame.font.Font('freesansbold.ttf', 15)
         text_image = font.render(self.btnText, True, WHITE)
         text_rect = text_image.get_rect(center = self.rect.center)
-        self.image.blit(text_image, text_rect)
+
+        blit(text_image, text_rect)
         self.rect.topleft = (self.xPos, self.yPos)
 
     def draw(self, surface):
@@ -36,6 +31,19 @@ class numberPlayersButton():
 
     def handle_event(self, event):
         return self.btnText
+
+
+if __name__ == "__main__":
+    pygame.init()
+    width, height = 752, 754
+    screen = pygame.display.set_mode((width, height))
+
+    clock = pygame.time.Clock()
+    is_running = False
+    select2Players = NumberPlayersButton("2 Players", 20, 20, 40, 100)
+
+
+
 
 
 
