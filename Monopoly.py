@@ -1,11 +1,16 @@
+# decent example of buttons
+# https://inventwithpython.com/blog/2012/10/30/designing-a-button-ui-module-for-pygame/
+
 import sys, pygame, random
 from pygame.locals import *
 pygame.init()
 
-BLUE = (0,   0, 255)
-GREEN = (0, 255,   0)
-RED = (255,   0,   0)
-YELLOW = (255, 255, 0)
+PLAYERCOLOR = [(0,   0, 255), (0, 255,   0), (255,   0,   0), (255, 255, 0)] #BLUE, GREEN, RED, YELLOW
+# PLAYERCOLOR[0] = (0,   0, 255) #BLUE
+# PLAYERCOLOR[1] = (0, 255,   0) #GREEN
+# PLAYERCOLOR[2] = (255,   0,   0) #RED
+# PLAYERCOLOR[3] = (255, 255, 0) #YELLOW
+
 
 random.seed()
 class button():
@@ -45,26 +50,26 @@ class Player:
         self.number = number
 
         if self.number == 1:
-            self.pawnColor = BLUE
+            self.pawnColor = PLAYERCOLOR[0]
         if self.number == 2:
-            self.pawnColor = GREEN
+            self.pawnColor = PLAYERCOLOR[1]
         if self.number == 3:
-            self.pawnColor = RED
+            self.pawnColor = PLAYERCOLOR[2]
         if self.number == 4:
-            self.pawnColor = YELLOW
+            self.pawnColor = PLAYERCOLOR[3]
 
     def takeTurn(self, numTurns):                       # print menu for each players turn and add one to turnsTaken and work as the way for the turn to be taken
         takingTurn = True                               # true until turn is over
         numTurns = numTurns + 1                         #
         while takingTurn:
             pos = pygame.mouse.get_pos()
-            RollDice = button(BLUE, 100, 754, 100, 50, "ROLL DICE")
+            RollDice = button(PLAYERCOLOR[0], 100, 754, 150, 50, str(numTurns % 4) + " Rolling")
             RollDice.draw(screen)
-            BuyHouses = button(BLUE, 200, 754, 100, 50, "BUY HOUSES")
+            BuyHouses = button(PLAYERCOLOR[1], 400, 754, 300, 50, "BUY HOUSES")
             BuyHouses.draw(screen)
             if event.type == pygame.MOUSEBUTTONDOWN:    # roll dice has been pushed
                 if RollDice.isOver(pos):
-                    print("Rolled Dice")
+                    print("Roll Dice")
 
             if event.type == pygame.MOUSEBUTTONDOWN:    # buy houses has been pushed
                 if BuyHouses.isOver(pos):
@@ -73,12 +78,13 @@ class Player:
             return numTurns
 
 
+
 if __name__ == "__main__":
-    players = []                                        #array of players
-    playerOne = Player(1)
-    playerTwo = Player(2)
-    playerThree = Player(3)
-    playerFour = Player(4)
+    # players = []                                        #array of players
+    # playerOne = Player(1)
+    # playerTwo = Player(2)
+    # playerThree = Player(3)
+    # playerFour = Player(4)
     width, height = 752, 800    #set size of the window. The size of the image is 752,754 but I went to 800 to add space for buttons
     screen = pygame.display.set_mode((width, height))
     startButton = button((0, 255, 255), 752/2 - 50, 754/2 - 50, 100, 50, "Start")
@@ -86,7 +92,7 @@ if __name__ == "__main__":
     gameHasStarted = False                              #initialize that the game hasnt started
     numPlayersChosen = False                            #initialize that number of players hasnt been chosen
     numPlayers = 0                                      #initialized to 0 for no reason, just to have value
-    turnsTaken = 0                                      #initialized to 0 so you can mod by the number of players to get whose turn it is
+    totalTurnsTaken = 0                                      #initialized to 0 so you can mod by the number of players to get whose turn it is
     running = True
     print("Started Running main loop")
     while running:
@@ -126,10 +132,27 @@ if __name__ == "__main__":
                     numPlayersChosen = True
 
             if numPlayersChosen:                            #this is where the game should start
-                playerOne.takeTurn(turnsTaken)
+                # call method startGame()
+
+                players = [Player(1), Player(2), Player(3), Player(4)]
+                if numPlayers == 2:
+                    startpos1 = pygame.draw.circle(screen, PLAYERCOLOR[0], (620, 650), 20, 0)
+                    startpos2 = pygame.draw.circle(screen, PLAYERCOLOR[1], (620, 620), 20, 0)
+                elif numPlayers == 3:
+                    startpos1 = pygame.draw.circle(screen, PLAYERCOLOR[0], (620, 650), 20, 0)
+                    startpos2 = pygame.draw.circle(screen, PLAYERCOLOR[1], (620, 620), 20, 0)
+                    startpos3 = pygame.draw.circle(screen, PLAYERCOLOR[2], (620, 590), 20, 0)
+                if numPlayers == 4:
+                    startpos1 = pygame.draw.circle(screen, PLAYERCOLOR[0], (620, 650), 20, 0)
+                    startpos2 = pygame.draw.circle(screen, PLAYERCOLOR[1], (620, 620), 20, 0)
+                    startpos3 = pygame.draw.circle(screen, PLAYERCOLOR[2], (620, 590), 20, 0)
+                    startpos4 = pygame.draw.circle(screen, PLAYERCOLOR[3], (620, 560), 20, 0)
+                players[0].takeTurn(totalTurnsTaken)
 
 
-        def position(p):
+
+        def paintPosition(p):
+
             if p.position == 1:
                 a1 = pygame.draw.circle(screen, p.pawnColor, (700, 700), 20, 0)
             if p.position == 2:
@@ -211,10 +234,12 @@ if __name__ == "__main__":
             if p.position == 40:
                 a40 = pygame.draw.circle(screen, p.pawnColor, (700, 625), 20, 0)
 
-        position(playerOne)
-        position(playerTwo)
-        position(playerThree)
-        position(playerFour)
+        # paintPosition(playerOne)
+        # paintPosition(playerTwo)
+        # paintPosition(playerThree)
+        # paintPosition(playerFour)
+        #painting at starting points
+
         # a1 = pygame.draw.circle(screen, (255,0,0), (700, 700), 20, 0)
         # a2 = pygame.draw.circle(screen, (255, 0, 0), (630, 700), 20, 0)
         # a3 = pygame.draw.circle(screen, (255, 0, 0), (565, 700), 20, 0)
