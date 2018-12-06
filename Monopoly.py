@@ -229,9 +229,15 @@ class Player:
                 return False
             elif self.number == EstateDict[name]['ownerNumber']:  # they own it
                 return True
-            elif EstateDict[name]['rent'] <= self.money:  # they don't own it but they have the money to pay for it
+            elif EstateDict[name]['rent'] <= self.money and EstateDict[name]['monopoly'] == 0:      # they don't own it but they have the money to pay for it and no monopoly
                 self.money = self.money - EstateDict[name]['rent']
                 return True
+            elif EstateDict[name]['monopoly'] == 1:
+                if self.money >= EstateDict[name]['price'] * 2:
+                    self.money = self.money - (EstateDict[name]['price'] * 2)
+                    return True
+                else:
+                    self.mortgageProperty(name)
             elif EstateDict[name]['rent'] > self.money:  # if they don't have the money, mortgage off properties
                 self.mortgageProperty(name)
 
