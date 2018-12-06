@@ -279,13 +279,20 @@ class Player:
             currentPlayerCard = chest.selectCardforCurrentPlayer()
 
             if (currentPlayerCard.type == 'go To'):
+                if self.position > currentPlayerCard.effect:
+                    self.money = self.money + 200
                 self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'Advance to GO'):
                 self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'cash'):
                 self.money = self.money + currentPlayerCard.effect
             elif (currentPlayerCard.type == 'give'):
-                self.money = self.money + 30
+
+                j = 0
+
+                while(j != len(playerslist)):
+                    self.money = self.money - 10
+                    j += 1
 
                 i = 0
 
@@ -298,7 +305,12 @@ class Player:
                         continue
 
             elif (currentPlayerCard.type == 'receive'):
-                self.money = self.money + 30
+
+                j = 0
+
+                while (j != len(playerslist)):
+                    self.money = self.money + 10
+                    j += 1
 
                 i = 0
 
@@ -325,21 +337,34 @@ class Player:
             currentPlayerCard = chance.selectCardforCurrentPlayer()
 
             if (currentPlayerCard.type == 'go To'):
+                if self.position > currentPlayerCard.effect:
+                    self.money = self.money + 200
                 self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'Advance to GO'):
                 self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'Go to Jail'):
                 self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'Go To Free Parking'):
+                if self.position > currentPlayerCard.effect:
+                    self.money = self.money + 200
                 self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'Go To RailRoads'):
+                if self.position > currentPlayerCard.effect:
+                    self.money = self.money + 200
                 self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'Go To BoardWalk'):
+                if self.position > currentPlayerCard.effect:
+                    self.money = self.money + 200
                 self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'cash'):
                 self.money = self.money + currentPlayerCard.effect
             elif (currentPlayerCard.type == 'give'):
-                self.money = self.money - 30
+
+                j = 0
+
+                while (j != len(playerslist)):
+                    self.money = self.money - 10
+                    j += 1
 
                 i = 0
 
@@ -352,7 +377,11 @@ class Player:
                         continue
 
             elif (currentPlayerCard.type == 'receive'):
-                self.money = self.money + 30
+                j = 0
+
+                while (j != len(playerslist)):
+                    self.money = self.money + 10
+                    j += 1
 
                 i = 0
 
