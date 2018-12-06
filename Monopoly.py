@@ -202,9 +202,9 @@ class Player:
                             waitingToBuy = True
                             while waitingToBuy:
                                 screen.blit(bg, [0, 0])
-                                prompt = button((255, 255, 255), 754 / 2, 752 * (1 / 3), 400, 100, "Buy?" + EstateDict[self.position]["estateName"])
-                                yes = button((0, 255, 0), 754 / 2 - (754 / 4), 752 / 2, 100, 50, "Yes")
-                                no = button((0, 255, 0), 754 / 2 - (754 * (3 / 4)), 752 / 2, 100, 50, "No")
+                                prompt = button(PLAYERCOLOR[0], 100, 752 * (1 / 3), 754 -200, 100, "Buy " + EstateDict[self.position]["estateName"] + " ?")
+                                yes = button((0, 255, 0), 754 / 2 - (754 * (1/4)), 752 / 2, 100, 50, "Yes")
+                                no = button((255, 0, 0), 754 / 2 + (754 * (1/4)), 752 / 2, 100, 50, "No")
                                 prompt.draw(screen)
                                 yes.draw(screen)
                                 no.draw(screen)
@@ -241,9 +241,12 @@ class Player:
     def checkCanBuy(self):
         for i in EstateDict:
             if self.position == i:
-                print("i is",i)
-                if self.money >= int(EstateDict[i]["price"]):
-                    return True
+                if int(EstateDict[i]["ownerNumber"]) == -1:
+                    if self.money >= int(EstateDict[i]["price"]):
+                        return True
+                    else:
+                        return False
+
                 else:
                     return False
 
