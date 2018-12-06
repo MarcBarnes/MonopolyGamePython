@@ -409,4 +409,3 @@ if __name__ == "__main__":
         # a40 = pygame.draw.circle(screen, (255, 0, 0), (700, 625), 20, 0)
         #flip and update go last always
         pygame.display.flip()
-        pygame.display.update()
