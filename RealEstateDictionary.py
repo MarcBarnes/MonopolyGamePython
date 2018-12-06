@@ -52,7 +52,7 @@ EstateDict = {	2:  {'estateName': 'Mediterranean Ave.'		,'price': '60'  	,'rent'
 				26: {'estateName': 'B. & O. Railroad'		,'price': '200' 	,'rent': '0', 	'group': 'Railroad'	    ,'available': '1' , 	'ownerNumber': '-1', 	'houses': '0',	'hotels': '0'},
 				36: {'estateName': 'Short Line Railroad'	,'price': '200' 	,'rent': '0', 	'group': 'Railroad'	    ,'available': '1' , 	'ownerNumber': '-1', 	'houses': '0',	'hotels': '0'},
           	}
-          	
+
 # #these lines are to test 	
 # print(EstateDict[2]['estateName'])
 # print(EstateDict[4]['estateName'])
