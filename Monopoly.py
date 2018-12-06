@@ -10,6 +10,40 @@ import Chance
 pygame.init()
 
 PLAYERCOLOR = [(0,   0, 255), (0, 255,   0), (255,   0,   0), (255, 255, 0)] #BLUE, GREEN, RED, YELLOW
+
+import random
+
+
+class Dice(object):
+    def __init__(self):
+        self.dice1 = random.randint(1, 6)
+        self.dice2 = random.randint(1, 6)
+        self.total = 0
+        self.counter = 0
+
+    def rollDice(self):
+        self.dice1 = random.randint(1, 6)
+        self.dice2 = random.randint(1, 6)
+        self.total = 0
+        print("First Dice is a " + str(self.dice1))
+        print("Second Dice is a " + str(self.dice2))
+        self.total += self.dice1
+        self.total += self.dice2
+        print("Sum of both Dices is: " + str(self.total))
+        self.doubleChecker()
+        return self.total
+
+    def doubleChecker(self):
+        if (self.counter == 3):
+            print("You rolled the same two numbers 3 times! it's time to go to Jail!")
+            # gotoJail()
+            self.counter = 0
+            return False
+
+        if (self.dice1 == self.dice2):
+            self.counter += 1
+
+
 class button():
     def __init__(self, color, x, y, width, height, text=''):
         self.color = color
@@ -25,7 +59,6 @@ class button():
             pygame.draw.rect(win, outline, (self.x - 2, self.y - 2, self.width + 4, self.height + 4), 0)
 
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height), 0)
-
         if self.text != '':
             font = pygame.font.SysFont('comicsans', 60)
             text = font.render(self.text, 1, (0, 0, 0))
@@ -53,6 +86,12 @@ class Player:
             self.pawnColor = PLAYERCOLOR[2]
         if self.number == 4:
             self.pawnColor = PLAYERCOLOR[3]
+
+        self.myDice = Dice()
+
+    def move(self):
+        num = self.myDice.rollDice()
+        self.position = (self.position + num) % 40
 
     def paintPosition(self):
         #random.seed()                                              #uncomment if bored or if you want to play hardmode
@@ -142,28 +181,32 @@ class Player:
         self.takingTurn = True                               # true until turn is over
         numTurns = numTurns + 1                         #
         while self.takingTurn:
+            pos = pygame.mouse.get_pos()
+            RollDice = button(PLAYERCOLOR[0], 752*(1/4), 754, 200, 50, "Roll Dice")
+            RollDice.draw(screen)
+            BuyHouses = button(PLAYERCOLOR[1], 400, 754, 300, 50, "BUY HOUSES")
+            BuyHouses.draw(screen)
+            pos = pygame.mouse.get_pos()
             for event in pygame.event.get():  # end python interpretter if window has been closed
-                pos = pygame.mouse.get_pos()
                 if event.type == pygame.QUIT:
                     self.takingTurn = False
                     quit()
 
-                pos = pygame.mouse.get_pos()
-                RollDice = button(PLAYERCOLOR[0], 100, 754, 150, 50, str(numTurns % 4) + " Rolling")
-                RollDice.draw(screen)
-                BuyHouses = button(PLAYERCOLOR[1], 400, 754, 300, 50, "BUY HOUSES")
-                BuyHouses.draw(screen)
                 if event.type == pygame.MOUSEBUTTONDOWN:    # roll dice has been pushed
                     if RollDice.isOver(pos):
                         print("Roll Dice")
+                        self.move()
                         self.takingTurn = False
 
                 if event.type == pygame.MOUSEBUTTONDOWN:    # buy houses has been pushed
                     if BuyHouses.isOver(pos):
                         print("Buying Houses")
-                        self.takingTurn = False
 
-            return numTurns
+            for p in players:
+                p.paintPosition()
+            pygame.display.update()
+
+        return numTurns
 
     def buyHotel(self, name):
         if EstateDict[name]['houses'] == 4:
@@ -249,6 +292,9 @@ class Board:
         self.gameHasStarted = False
         self.numPlayersChosen = False
         self.setupBoard()
+        b = button((255, 255, 255), 750 / 2 - 375, 754, 750, 50, "")
+        b.draw(screen)
+        pygame.display.update()
 
     def setupBoard(self):
         running = True
@@ -313,6 +359,7 @@ if __name__ == "__main__":
     while(gameHasNotBeenWon):
         screen.blit(bg, [0, 0])
         theBoard.totalTurnsTaken = players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].takeTurn(theBoard.totalTurnsTaken)
+        print("Number of turns taken: ", theBoard.totalTurnsTaken)
         for p in players:
             p.paintPosition()
 
