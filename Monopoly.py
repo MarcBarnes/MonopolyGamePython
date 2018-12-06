@@ -203,8 +203,8 @@ class Player:
                             while waitingToBuy:
                                 screen.blit(bg, [0, 0])
                                 prompt = button(PLAYERCOLOR[0], 100, 752 * (1 / 3), 754 -200, 100, "Buy " + EstateDict[self.position]["estateName"] + " ?")
-                                yes = button((0, 255, 0), 754 / 2 - (754 * (1/4)), 752 / 2, 100, 50, "Yes")
-                                no = button((255, 0, 0), 754 / 2 + (754 * (1/4)), 752 / 2, 100, 50, "No")
+                                yes = button((0, 255, 0), 754 / 2 - (754 * (1/4)), 752 / 2, 75, 50, "Yes")
+                                no = button((255, 0, 0), 754 / 2 + (754 * (1/4)), 752 / 2, 75, 50, "No")
                                 prompt.draw(screen)
                                 yes.draw(screen)
                                 no.draw(screen)
