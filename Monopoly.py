@@ -228,11 +228,11 @@ class Player:
             return True
         return False
 
-    def CheckforChanceOrChest(self,playerslist[]):
+    def CheckforChanceOrChest(self,playerslist):
         
         # Community Chest
         if(self.position == 1 or self.position == 18 or self.position == 34):
-            pygame.draw.rect(gameDisplay, green,(150,450,100,50))
+
             chest = communityChest()
             currentPlayerCard = chest.selectCardforCurrentPlayer()
 
@@ -242,10 +242,10 @@ class Player:
                 self.position == currentPlayerCard.effect
             elif(currentPlayerCard.type == 'cash'):
                 self.money = self.money - currentPlayerCard.effect
-            elif(currentPlayerCard == 'give')
+            elif(currentPlayerCard.type == 'give'):
                 self.money = self.money - 30
                 
-                int i = 0
+                i = 0
                 
                 while(i != len(playerslist)):
                     if(playerslist[i].number != self.number):
@@ -255,10 +255,10 @@ class Player:
                         i += 1
                         continue
             
-            elif(currentPlayerCard == 'recieve'):
+            elif(currentPlayerCard.type == 'recieve'):
                 self.money = self.money + 30
 
-                int i = 0
+                i = 0
     
                 while(i != len(playerslist)):
                     if(playerslist[i].number != self.number):
@@ -270,7 +270,7 @@ class Player:
 
         # Chance
         if(self.position == 8 or self.position == 23 or self.position == 37):
-            pygame.draw.rect(gameDisplay, green,(150,450,100,50))
+
             if(currentPlayerCard.type == 'Go To'):
                 self.position == currentPlayerCard.effect
             elif(currentPlayerCard.type == 'Advance To Go'):
@@ -285,10 +285,10 @@ class Player:
                 self.position == currentPlayerCard.effect
             elif(currentPlayerCard.type == 'cash'):
                 self.money = self.money - currentPlayerCard.effect
-            elif(currentPlayerCard == 'give')
+            elif(currentPlayerCard.type == 'give'):
                 self.money = self.money - 30
                 
-                int i = 0
+                i = 0
                 
                 while(i != len(playerslist)):
                     if(playerslist[i].number != self.number):
@@ -298,10 +298,10 @@ class Player:
                         i += 1
                         continue
         
-            elif(currentPlayerCard == 'recieve'):
+            elif(currentPlayerCard.type == 'recieve'):
                 self.money = self.money + 30
                 
-                int i = 0
+                i = 0
                 
                 while(i != len(playerslist)):
                     if(playerslist[i].number != self.number):
