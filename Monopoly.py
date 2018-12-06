@@ -93,7 +93,7 @@ class Player:
 
     def move(self):
         num = self.myDice.rollDice()
-        self.position = (self.position + num) % 40
+        self.position = (self.position + num) % 40 + 1
 
     def paintPosition(self):
         #random.seed()                                              #uncomment if bored or if you want to play hardmode
@@ -199,13 +199,29 @@ class Player:
                         print("Roll Dice")
                         self.move()
                         choice = self.checkCanBuy()
-                        CorC = self.CheckforChanceOrChest()
 
-                        if CorC:
-                            screen.blit(bg, [0, 0])
-                            prompt = button(PLAYERCOLOR[0], 100, 752 * (1 / 3), 754 - 200, 100, "You drew a Chance or Community Chest Card " )
-                            prompt.draw(screen)
-                            pygame.display.update()
+
+                        if self.position == 3 or self.position == 8 or self.position == 18 or self.position == 23 or self.position == 34 or self.position == 37:
+                            waitingToClick = True
+                            currentPlayerCard = self.CheckforChanceOrChest()
+                            while waitingToClick:
+                                #print("Within CooC function")
+                                screen.blit(bg, [0, 0])
+                                prompt = button(PLAYERCOLOR[0], 100, 752 * (1 / 3), 754 - 200, 100, str(currentPlayerCard))
+                                ok = button((0, 255, 0), 754 / 2 - (754 * (1 / 4)), 752 / 2, 75, 50, "Ok")
+                                ok.draw(screen)
+                                prompt.draw(screen)
+                                pygame.display.update()
+                                for event in pygame.event.get():  # end python interpretter if window has been closed
+                                    pos = pygame.mouse.get_pos()
+                                    if event.type == pygame.QUIT:
+                                        running = False
+                                        quit()
+
+                                    if event.type == pygame.MOUSEBUTTONDOWN:  # start has been pushed
+                                        if ok.isOver(pos):
+                                            print("Player ", self.number, "has", self.money)
+                                            waitingToClick = False
 
 
                         if choice:
@@ -251,6 +267,9 @@ class Player:
     def CheckforChanceOrChest(self):
         playerslist = players
 
+        for p in playerslist:
+            print("INITIAL POSITION", p.position)
+
 
         # Community Chest
         if (self.position == 3 or self.position == 18 or self.position == 34):
@@ -259,26 +278,13 @@ class Player:
             chest = communityChest()
             currentPlayerCard = chest.selectCardforCurrentPlayer()
 
-            if (currentPlayerCard.type == 'Go To'):
-                self.position == currentPlayerCard.effect
-            elif (currentPlayerCard.type == 'Advance To Go'):
-                self.position == currentPlayerCard.effect
+            if (currentPlayerCard.type == 'go To'):
+                self.position = currentPlayerCard.effect
+            elif (currentPlayerCard.type == 'Advance to GO'):
+                self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'cash'):
-                self.money = self.money - currentPlayerCard.effect
+                self.money = self.money + currentPlayerCard.effect
             elif (currentPlayerCard.type == 'give'):
-                self.money = self.money - 30
-
-                i = 0
-
-                while (i != len(playerslist)):
-                    if (playerslist[i].number != self.number):
-                        playerslist[i].money = playerslist[i].money + 10
-                        i += 1
-                    else:
-                        i += 1
-                        continue
-
-            elif (currentPlayerCard.type == 'recieve'):
                 self.money = self.money + 30
 
                 i = 0
@@ -290,9 +296,27 @@ class Player:
                     else:
                         i += 1
                         continue
-            return True
+
+            elif (currentPlayerCard.type == 'receive'):
+                self.money = self.money + 30
+
+                i = 0
+
+                while (i != len(playerslist)):
+                    if (playerslist[i].number != self.number):
+                        playerslist[i].money = playerslist[i].money + 10
+                        i += 1
+                    else:
+                        i += 1
+                        continue
+
+            for p in playerslist:
+                print("NEW POSITION", p.position)
+
             print(currentPlayerCard.type, "within Comutitty chest", self.money)
             pygame.display.update()
+            return currentPlayerCard
+
         # Chance
         if (self.position == 8 or self.position == 23 or self.position == 37):
             test = str(self.position)
@@ -300,20 +324,20 @@ class Player:
             chance = Chance()
             currentPlayerCard = chance.selectCardforCurrentPlayer()
 
-            if (currentPlayerCard.type == 'Go To'):
-                self.position == currentPlayerCard.effect
-            elif (currentPlayerCard.type == 'Advance To Go'):
-                self.position == currentPlayerCard.effect
+            if (currentPlayerCard.type == 'go To'):
+                self.position = currentPlayerCard.effect
+            elif (currentPlayerCard.type == 'Advance to GO'):
+                self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'Go to Jail'):
-                self.position == currentPlayerCard.effect
+                self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'Go To Free Parking'):
-                self.position == currentPlayerCard.effect
+                self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'Go To RailRoads'):
-                self.position == currentPlayerCard.effect
+                self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'Go To BoardWalk'):
-                self.position == currentPlayerCard.effect
+                self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'cash'):
-                self.money = self.money - currentPlayerCard.effect
+                self.money = self.money + currentPlayerCard.effect
             elif (currentPlayerCard.type == 'give'):
                 self.money = self.money - 30
 
@@ -327,7 +351,7 @@ class Player:
                         i += 1
                         continue
 
-            elif (currentPlayerCard.type == 'recieve'):
+            elif (currentPlayerCard.type == 'receive'):
                 self.money = self.money + 30
 
                 i = 0
@@ -341,9 +365,12 @@ class Player:
                         continue
             print(currentPlayerCard.type, "within Chance", self.money)
             pygame.display.update()
-            return True
-        else:
-            return False
+
+            for p in playerslist:
+                print("NEW POSITION", p.position)
+
+            return currentPlayerCard
+
     def checkCanBuy(self):
         for i in EstateDict:
             if self.position == i:

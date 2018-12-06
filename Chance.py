@@ -17,6 +17,8 @@ class chanceCard:
 
 #Chance is considered to be "Movement Deck" so more movement cards
 class Chance:
+
+    random.seed()
     
     RAILROADS = [6,16,26,36]
     
@@ -48,18 +50,20 @@ class Chance:
         currentPlayersCard = self.CARDS[0]
         
         random.shuffle(self.CARDS)
+
+        print(currentPlayersCard)
         
         return currentPlayersCard
 
-#tester
-if __name__ == "__main__":
-    
-    x = Chance()
-    
-    playerCard = x.selectCardforCurrentPlayer()
-    
-    print(playerCard)
-
+# #tester
+# if __name__ == "__main__":
+#
+#     x = Chance()
+#
+#     playerCard = x.selectCardforCurrentPlayer()
+#
+#     print(playerCard)
+#
 
 
 

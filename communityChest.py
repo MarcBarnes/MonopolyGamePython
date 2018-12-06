@@ -16,6 +16,8 @@ class communityChestCard:
 
 #communityChest considered to be "Money Deck" so more money cards
 class communityChest:
+
+    random.seed()
     
     CASH = [10,20,30,40,50,60,70,80,90,100,150,200,-10,-20,-30,-40,-50,-60,-70,-80,-90,-100,-150,-200]
     
@@ -43,16 +45,18 @@ class communityChest:
 
         random.shuffle(self.CARDS)
 
+        print(currentPlayersCard)
+
         return currentPlayersCard
-
-#tester
-if __name__ == "__main__":
-
-    x = communityChest()
-
-    playerCard = x.selectCardforCurrentPlayer()
-
-    print(playerCard)
+#
+# #tester
+# if __name__ == "__main__":
+#
+#     x = communityChest()
+#
+#     playerCard = x.selectCardforCurrentPlayer()
+#
+#     print(playerCard)
 
 
 
