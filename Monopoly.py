@@ -231,7 +231,8 @@ class Player:
     def CheckforChanceOrChest(self,playerslist[]):
         
         # Community Chest
-        if(self.position == 3 or self.position == 18 or self.position == 34):
+        if(self.position == 1 or self.position == 18 or self.position == 34):
+            pygame.draw.rect(gameDisplay, green,(150,450,100,50))
             chest = communityChest()
             currentPlayerCard = chest.selectCardforCurrentPlayer()
 
@@ -269,7 +270,7 @@ class Player:
 
         # Chance
         if(self.position == 8 or self.position == 23 or self.position == 37):
-
+            pygame.draw.rect(gameDisplay, green,(150,450,100,50))
             if(currentPlayerCard.type == 'Go To'):
                 self.position == currentPlayerCard.effect
             elif(currentPlayerCard.type == 'Advance To Go'):
