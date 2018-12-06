@@ -69,24 +69,25 @@ class Player:
         if EstateDict[name]['houses'] < 4 and EstateDict[name]['monopoly']:
             self.money = self.money - EstateDict[name]['houseCost']
             return True
-        else
+        else:
             return False
 
     def isPlayerBankrupt(self):
         return self.isPlayerBankrupt
 
     def payRent(self, name):
-        if self.isPlayerBankrupt == True:
-            return False
         self.playerHasPaid = False
         while self.playerHasPaid == False:
-            if self.number == EstateDict[name]['ownerNumber']:     # they own it
+            if self.isPlayerBankrupt:
+                return False
+            elif self.number == EstateDict[name]['ownerNumber']:     # they own it
                 return True
-        elif EstateDict[name]['rent'] <= self.money:           # they don't own it but they have the money to pay for it
-            self.money = self.money - EstateDict[name]['rent']
-        elif EstateDict[name]['rent'] > self.money:             # if they don't have the money, mortgage off properties
-            self.mortgageProperty(name)
-# revisit the logic on this, bc we have a func calling a func, when we get to mortgageProp calling payRent, will it return to where it was w/i mortgageProp?
+            elif EstateDict[name]['rent'] <= self.money:           # they don't own it but they have the money to pay for it
+                self.money = self.money - EstateDict[name]['rent']
+                return True
+            elif EstateDict[name]['rent'] > self.money:             # if they don't have the money, mortgage off properties
+                self.mortgageProperty(name)
+
     def mortgageProperty(self, name):
         for property in EstateDict:
             if property['ownerNumber'] == self.number:
@@ -121,10 +122,6 @@ class Player:
             return True
         return False
 
-
-
-
-
 if __name__ == "__main__":
     playerOne = Player(1)
     playerTwo = Player(2)
@@ -143,9 +140,9 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 running = False
 
-            if event.type == pygame.MOUSEBUTTONDOWN:    #start has been pushed
-                if startButton.isOver(pos):
-                    print("Game has started")
+            # if event.type == pygame.MOUSEBUTTONDOWN:    #start has been pushed
+            #     if startButton.isOver(pos):
+            #         print("Game has started")
 
         pygame.display.update()
 
@@ -239,46 +236,5 @@ if __name__ == "__main__":
         position(playerTwo)
         position(playerThree)
         position(playerFour)
-
-        # a1 = pygame.draw.circle(screen, (255,0,0), (700, 700), 20, 0)
-        # a2 = pygame.draw.circle(screen, (255, 0, 0), (630, 700), 20, 0)
-        # a3 = pygame.draw.circle(screen, (255, 0, 0), (565, 700), 20, 0)
-        # a4 = pygame.draw.circle(screen, (255, 0, 0), (500, 700), 20, 0)
-        # a5 = pygame.draw.circle(screen, (255, 0, 0), (440, 700), 20, 0)
-        # a6 = pygame.draw.circle(screen, (255, 0, 0), (380, 700), 20, 0)
-        # a7 = pygame.draw.circle(screen, (255, 0, 0), (315, 700), 20, 0)
-        # a8 = pygame.draw.circle(screen, (255, 0, 0), (255, 700), 20, 0)
-        # a9 = pygame.draw.circle(screen, (255, 0, 0), (190, 700), 20, 0)
-        # a10 = pygame.draw.circle(screen, (255, 0, 0), (130, 700), 20, 0)
-        # a11 = pygame.draw.circle(screen, (255, 0, 0), (60, 700), 20, 0)
-        # a12 = pygame.draw.circle(screen, (255, 0, 0), (60, 630), 20, 0)
-        # a13 = pygame.draw.circle(screen, (255, 0, 0), (60, 565), 20, 0)
-        # a14 = pygame.draw.circle(screen, (255, 0, 0), (60, 505), 20, 0)
-        # a15 = pygame.draw.circle(screen, (255, 0, 0), (60, 445), 20, 0)
-        # a16 = pygame.draw.circle(screen, (255, 0, 0), (60, 380), 20, 0)
-        # a17 = pygame.draw.circle(screen, (255, 0, 0), (60, 315), 20, 0)
-        # a18 = pygame.draw.circle(screen, (255, 0, 0), (60, 250), 20, 0)
-        # a19 = pygame.draw.circle(screen, (255, 0, 0), (60, 185), 20, 0)
-        # a20 = pygame.draw.circle(screen, (255, 0, 0), (60, 120), 20, 0)
-        # a21 = pygame.draw.circle(screen, (255, 0, 0), (60, 50), 20, 0)
-        # a22 = pygame.draw.circle(screen, (255, 0, 0), (125, 50), 20, 0)
-        # a23 = pygame.draw.circle(screen, (255, 0, 0), (190, 50), 20, 0)
-        # a24 = pygame.draw.circle(screen, (255, 0, 0), (250, 50), 20, 0)
-        # a25 = pygame.draw.circle(screen, (255, 0, 0), (310, 50), 20, 0)
-        # a26 = pygame.draw.circle(screen, (255, 0, 0), (375, 50), 20, 0)
-        # a27 = pygame.draw.circle(screen, (255, 0, 0), (440, 50), 20, 0)
-        # a28 = pygame.draw.circle(screen, (255, 0, 0), (505, 50), 20, 0)
-        # a29 = pygame.draw.circle(screen, (255, 0, 0), (570, 50), 20, 0)
-        # a30 = pygame.draw.circle(screen, (255, 0, 0), (630, 50), 20, 0)
-        # a31 = pygame.draw.circle(screen, (255, 0, 0), (700, 50), 20, 0)
-        # a32 = pygame.draw.circle(screen, (255, 0, 0), (700, 125), 20, 0)
-        # a33 = pygame.draw.circle(screen, (255, 0, 0), (700, 195), 20, 0)
-        # a34 = pygame.draw.circle(screen, (255, 0, 0), (700, 255), 20, 0)
-        # a35 = pygame.draw.circle(screen, (255, 0, 0), (700, 315), 20, 0)
-        # a36 = pygame.draw.circle(screen, (255, 0, 0), (700, 375), 20, 0)
-        # a37 = pygame.draw.circle(screen, (255, 0, 0), (700, 440), 20, 0)
-        # a38 = pygame.draw.circle(screen, (255, 0, 0), (700, 505), 20, 0)
-        # a39 = pygame.draw.circle(screen, (255, 0, 0), (700, 560), 20, 0)
-        # a40 = pygame.draw.circle(screen, (255, 0, 0), (700, 625), 20, 0)
 
         pygame.display.flip()
