@@ -42,8 +42,7 @@ class button():
 class Player:
 
 # create moveTo func
-# buy hotel func
-# buy house func
+
     def __init__(self, number):
         self.position = random.randint(1,40)
         self.number = number
@@ -59,14 +58,30 @@ class Player:
         elif self.number == 4:
             self.pawnColor = YELLOW
 
+    def buyHotel(self, name):
+        if EstateDict[name]['houses'] == 4:
+            self.money = self.money = EstateDict[name]['houseCost']
+            return True
+        else:
+            return False
+
+    def buyHouse(self, name):
+        if EstateDict[name]['houses'] < 4 and EstateDict[name]['monopoly']:
+            self.money = self.money - EstateDict[name]['houseCost']
+            return True
+        else
+            return False
+
     def isPlayerBankrupt(self):
         return self.isPlayerBankrupt
 
     def payRent(self, name):
-        if self.isPlayerBankrupt:
+        if self.isPlayerBankrupt == True:
             return False
-        elif self.number == EstateDict[name]['ownerNumber']:     # they own it
-            return True
+        self.playerHasPaid = False
+        while self.playerHasPaid == False:
+            if self.number == EstateDict[name]['ownerNumber']:     # they own it
+                return True
         elif EstateDict[name]['rent'] <= self.money:           # they don't own it but they have the money to pay for it
             self.money = self.money - EstateDict[name]['rent']
         elif EstateDict[name]['rent'] > self.money:             # if they don't have the money, mortgage off properties
