@@ -3,6 +3,7 @@
 
 import sys, pygame, random
 from pygame.locals import *
+from RealEstateDictionary import EstateDict
 pygame.init()
 
 PLAYERCOLOR = [(0,   0, 255), (0, 255,   0), (255,   0,   0), (255, 255, 0)] #BLUE, GREEN, RED, YELLOW
@@ -81,6 +82,69 @@ class Player:
                     print("Buying Houses")
 
             return numTurns
+
+    def buyHotel(self, name):
+        if EstateDict[name]['houses'] == 4:
+            self.money = self.money = EstateDict[name]['houseCost']
+            return True
+        else:
+            return False
+
+    def buyHouse(self, name):
+        if EstateDict[name]['houses'] < 4 and EstateDict[name]['monopoly']:
+            self.money = self.money - EstateDict[name]['houseCost']
+            return True
+        else:
+            return False
+
+    def isPlayerBankrupt(self):
+        return self.isPlayerBankrupt
+
+    def payRent(self, name):
+        self.playerHasPaid = False
+        while self.playerHasPaid == False:
+            if self.isPlayerBankrupt:
+                return False
+            elif self.number == EstateDict[name]['ownerNumber']:  # they own it
+                return True
+            elif EstateDict[name]['rent'] <= self.money:  # they don't own it but they have the money to pay for it
+                self.money = self.money - EstateDict[name]['rent']
+                return True
+            elif EstateDict[name]['rent'] > self.money:  # if they don't have the money, mortgage off properties
+                self.mortgageProperty(name)
+
+    def mortgageProperty(self, name):
+        for property in EstateDict:
+            if property['ownerNumber'] == self.number:
+                if property['hotel'] > 0:  # mortgages hotel
+                    self.money = self.money + property['houseValue']
+                    property['hotel'] = 0
+                    self.payRent(name)
+                elif property['houses'] > 0:  # mortgages houses
+                    self.money = self.money + property['houseValule']
+                    property['houses'] = property['houses'] - 1
+                    self.payRent(name)
+                elif property['mortgaged'] == 0:  # mortgages property itself
+                    self.money = self.money + property['mortgageValue']
+                    property['mortgaged'] = 1
+                    self.payRent(name)
+        self.isPlayerBankrupt = True  # if we exit for
+
+    def getMoney(self):
+        return self.money
+
+    def buyProperty(self, name):
+        if EstateDict[name]['available'] == 1 and self.money >= EstateDict[name]['price']:
+            self.money = self.money - EstateDict[name]['price']
+            EstateDict[name]['ownerNumber'] = self.number
+            return True
+        else:
+            return False
+
+    def isPropertyOwner(self, name):
+        if EstateDict[name]['ownerNumber'] == self.number:
+            return True
+        return False
 
 class Board:
     def __init__(self):
