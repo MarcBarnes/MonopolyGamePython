@@ -83,11 +83,14 @@ class Player:
             return numTurns
 
 class Board:
+    def __init__(self):
+        self.numPlayers = 0
+        self.totalTurnsTaken = 0
+        self.gameHasStarted = False
+        self.numPlayersChosen = False
+        self.setupBoard()
+
     def setupBoard(self):
-        totalTurnsTaken = 0
-        numPlayers = 0
-        gameHasStarted = False
-        numPlayersChosen = False
         running = True
         while running:
             screen.blit(bg, [0, 0])  # paint the backgorund image in the back first so it doesnt cover anything
@@ -101,32 +104,32 @@ class Board:
 
                 if event.type == pygame.MOUSEBUTTONDOWN:  # start has been pushed
                     if startButton.isOver(pos):
-                        gameHasStarted = True
+                        self.gameHasStarted = True
                         print("Game has started")
 
-            if gameHasStarted == False:
+            if self.gameHasStarted == False:
                 print("Drawing start button")
                 startButton.draw(screen)
 
-            if gameHasStarted:
-                if numPlayersChosen == False:
+            if self.gameHasStarted:
+                if self.numPlayersChosen == False:
                     print("Drawing howManyPlayers text")
                     pressedKey = pygame.key.get_pressed()
-                    howManyPlayers = button((0, 0, 0), 752 / 2, 754 / 4 * 3 - 50, 0, 0, "How many Players?(2-4)")
-                    howManyPlayers.draw(screen)
+                    self.howManyPlayers = button((0, 0, 0), 752 / 2, 754 / 4 * 3 - 50, 0, 0, "How many Players?(2-4)")
+                    self.howManyPlayers.draw(screen)
                     if pressedKey[K_2]:
-                        numPlayers = 2
-                        numPlayersChosen = True
+                        self.numPlayers = 2
+                        self.numPlayersChosen = True
 
                     if pressedKey[K_3]:
-                        numPlayers = 3
-                        numPlayersChosen = True
+                        self.numPlayers = 3
+                        self.numPlayersChosen = True
 
                     if pressedKey[K_4]:
-                        numPlayers = 4
-                        numPlayersChosen = True
+                        self.numPlayers = 4
+                        self.numPlayersChosen = True
 
-                if numPlayersChosen:
+                if self.numPlayersChosen:
                     running = False
 
             pygame.display.flip()
@@ -137,17 +140,18 @@ if __name__ == "__main__":
     width, height = 752, 800  # set size of the window. The size of the image is 752,754 but I went to 800 to add space for buttons
     screen = pygame.display.set_mode((width, height))
     theBoard = Board()
-    theBoard.setupBoard()
     gameHasNotBeenWon = True
-    i = theBoard.numPlayers
     players = []
-    while(i != 0):
-        p = Player()
+    i = 1
+    while(i <= theBoard.numPlayers):
+        p = Player(i)
         players.append(p)
-        i = i - 1
+        print("player" , i , "has been created")
+        i = i + 1
 
-    while(gameHasNotBeenWon):
-        turn = Board.totalTurnsTaken
+
+    #while(gameHasNotBeenWon):
+        #turn = theBoard.totalTurnsTaken
 
 
     def paintPosition(p):
