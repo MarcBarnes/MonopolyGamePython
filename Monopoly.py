@@ -4,6 +4,9 @@
 import sys, pygame, random
 from pygame.locals import *
 from RealEstateDictionary import EstateDict
+import Dice
+import communityChest
+import Chance
 pygame.init()
 
 PLAYERCOLOR = [(0,   0, 255), (0, 255,   0), (255,   0,   0), (255, 255, 0)] #BLUE, GREEN, RED, YELLOW
