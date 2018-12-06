@@ -228,6 +228,88 @@ class Player:
             return True
         return False
 
+    def CheckforChanceOrChest(self,playerslist[]):
+        
+        # Community Chest
+        if(self.position == 3 or self.position == 18 or self.position == 34):
+            chest = communityChest()
+            currentPlayerCard = chest.selectCardforCurrentPlayer()
+
+            if(currentPlayerCard.type == 'Go To'):
+                self.position == currentPlayerCard.effect
+            elif(currentPlayerCard.type == 'Advance To Go'):
+                self.position == currentPlayerCard.effect
+            elif(currentPlayerCard.type == 'cash'):
+                self.money = self.money - currentPlayerCard.effect
+            elif(currentPlayerCard == 'give')
+                self.money = self.money - 30
+                
+                int i = 0
+                
+                while(i != len(playerslist)):
+                    if(playerslist[i].number != self.number):
+                        playerslist[i].money = playerslist[i].money + 10
+                        i += 1
+                    else:
+                        i += 1
+                        continue
+            
+            elif(currentPlayerCard == 'recieve'):
+                self.money = self.money + 30
+
+                int i = 0
+    
+                while(i != len(playerslist)):
+                    if(playerslist[i].number != self.number):
+                        playerslist[i].money = playerslist[i].money + 10
+                        i += 1
+                    else:
+                        i += 1
+                        continue
+
+        # Chance
+        if(self.position == 8 or self.position == 23 or self.position == 37):
+
+            if(currentPlayerCard.type == 'Go To'):
+                self.position == currentPlayerCard.effect
+            elif(currentPlayerCard.type == 'Advance To Go'):
+                self.position == currentPlayerCard.effect
+            elif(currentPlayerCard.type == 'Go to Jail'):
+                self.position == currentPlayerCard.effect
+            elif(currentPlayerCard.type == 'Go To Free Parking'):
+                self.position == currentPlayerCard.effect
+            elif(currentPlayerCard.type == 'Go To RailRoads'):
+                self.position == currentPlayerCard.effect
+            elif(currentPlayerCard.type == 'Go To BoardWalk'):
+                self.position == currentPlayerCard.effect
+            elif(currentPlayerCard.type == 'cash'):
+                self.money = self.money - currentPlayerCard.effect
+            elif(currentPlayerCard == 'give')
+                self.money = self.money - 30
+                
+                int i = 0
+                
+                while(i != len(playerslist)):
+                    if(playerslist[i].number != self.number):
+                        playerslist[i].money = playerslist[i].money + 10
+                        i += 1
+                    else:
+                        i += 1
+                        continue
+        
+            elif(currentPlayerCard == 'recieve'):
+                self.money = self.money + 30
+                
+                int i = 0
+                
+                while(i != len(playerslist)):
+                    if(playerslist[i].number != self.number):
+                        playerslist[i].money = playerslist[i].money + 10
+                        i += 1
+                    else:
+                        i += 1
+                        continue
+
 class Board:
     def __init__(self):
         self.numPlayers = 0
@@ -303,4 +385,5 @@ if __name__ == "__main__":
             p.paintPosition()
 
         pygame.display.update()
+
 
