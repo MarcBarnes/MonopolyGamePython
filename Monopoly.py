@@ -55,6 +55,8 @@ class Player:
             self.pawnColor = PLAYERCOLOR[3]
 
     def paintPosition(self):
+        #random.seed()                                              #uncomment if bored or if you want to play hardmode
+        #self.position = random.randint(1,40)
         if self.position == 1:
             a1 = pygame.draw.circle(screen, self.pawnColor, (700, 700 + self.number), 20, 0)
         if self.position == 2:
@@ -137,27 +139,29 @@ class Player:
             a40 = pygame.draw.circle(screen, self.pawnColor, (700, 625 + self.number), 20, 0)
 
     def takeTurn(self, numTurns):                       # print menu for each players turn and add one to turnsTaken and work as the way for the turn to be taken
-        takingTurn = True                               # true until turn is over
+        self.takingTurn = True                               # true until turn is over
         numTurns = numTurns + 1                         #
-        while takingTurn:
+        while self.takingTurn:
             for event in pygame.event.get():  # end python interpretter if window has been closed
                 pos = pygame.mouse.get_pos()
                 if event.type == pygame.QUIT:
-                    running = False
+                    self.takingTurn = False
                     quit()
-            pos = pygame.mouse.get_pos()
-            RollDice = button(PLAYERCOLOR[0], 100, 754, 150, 50, str(numTurns % 4) + " Rolling")
-            RollDice.draw(screen)
-            BuyHouses = button(PLAYERCOLOR[1], 400, 754, 300, 50, "BUY HOUSES")
-            BuyHouses.draw(screen)
-            if event.type == pygame.MOUSEBUTTONDOWN:    # roll dice has been pushed
-                if RollDice.isOver(pos):
-                    print("Roll Dice")
-                    takingTurn = False
 
-            if event.type == pygame.MOUSEBUTTONDOWN:    # buy houses has been pushed
-                if BuyHouses.isOver(pos):
-                    print("Buying Houses")
+                pos = pygame.mouse.get_pos()
+                RollDice = button(PLAYERCOLOR[0], 100, 754, 150, 50, str(numTurns % 4) + " Rolling")
+                RollDice.draw(screen)
+                BuyHouses = button(PLAYERCOLOR[1], 400, 754, 300, 50, "BUY HOUSES")
+                BuyHouses.draw(screen)
+                if event.type == pygame.MOUSEBUTTONDOWN:    # roll dice has been pushed
+                    if RollDice.isOver(pos):
+                        print("Roll Dice")
+                        self.takingTurn = False
+
+                if event.type == pygame.MOUSEBUTTONDOWN:    # buy houses has been pushed
+                    if BuyHouses.isOver(pos):
+                        print("Buying Houses")
+                        self.takingTurn = False
 
             return numTurns
 
@@ -292,10 +296,11 @@ if __name__ == "__main__":
         print("player" , i , "has been created")
         i = i + 1
 
-
     while(gameHasNotBeenWon):
         screen.blit(bg, [0, 0])
+        theBoard.totalTurnsTaken = players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].takeTurn(theBoard.totalTurnsTaken)
+        for p in players:
+            p.paintPosition()
 
-        theBoard.totalTurnsTaken = players[theBoard.totalTurnsTaken % theBoard.numPlayers].takeTurn()
-
+        pygame.display.update()
 

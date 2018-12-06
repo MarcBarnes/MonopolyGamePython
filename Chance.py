@@ -25,9 +25,9 @@ class Chance:
     CASH = [10,20,30,40,50,60,70,80,90,100,150,200,-10,-20,-30,-40,-50,-60,-70,-80,-90,-100,-150,-200]
     
     CARDS = [chanceCard('go To', random.randint(2,40)),
-             chanceCard('go To', random.randint(2,40))
-             chanceCard('go To', random.randint(2,40))
-             chanceCard('go To', random.randint(2,40))
+             chanceCard('go To', random.randint(2,40)),
+             chanceCard('go To', random.randint(2,40)),
+             chanceCard('go To', random.randint(2,40)),
              chanceCard('Advance to GO', 1),
              chanceCard('Go To Jail', 31),
              chanceCard('Go To Free Parking', 21),
