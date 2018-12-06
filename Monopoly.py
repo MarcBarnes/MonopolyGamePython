@@ -208,81 +208,81 @@ class Player:
 
         return numTurns
 
-    def buyHotel(self, name):
-        if EstateDict[name]['houses'] == 4:
-            self.money = self.money = EstateDict[name]['houseCost']
+    def buyHotel(self):
+        if EstateDict[self.position]['houses'] == 4:
+            self.money = self.money - EstateDict[self.position]['houseCost']
             return True
         else:
             return False
 
-    def buyHouse(self, name):
-        if EstateDict[name]['houses'] < 4 and EstateDict[name]['monopoly']:
-            self.money = self.money - EstateDict[name]['houseCost']
+    def buyHouse(self):
+        if EstateDict[self.position]['houses'] < 4 and EstateDict[self.position]['monopoly']:
+            self.money = self.money - EstateDict[self.position]['houseCost']
             return True
         else:
             return False
 
-    def payRent(self, name):
+    def payRent(self):
         self.playerHasPaid = False
         while self.playerHasPaid == False:
             if self.isPlayerBankrupt:
                 return False
-            elif self.number == EstateDict[name]['ownerNumber']:  # they own it
+            elif self.number == EstateDict[self.position]['ownerNumber']:  # they own it
                 return True
-            elif EstateDict[name]['rent'] <= self.money and EstateDict[name]['monopoly'] == 0:      # they don't own it but they have the money to pay for it and no monopoly
-                self.money = self.money - EstateDict[name]['rent']
+            elif EstateDict[self.position]['rent'] <= self.money and EstateDict[self.position]['monopoly'] == 0:      # they don't own it but they have the money to pay for it and no monopoly
+                self.money = self.money - EstateDict[self.position]['rent']
                 return True
-            elif EstateDict[name]['monopoly'] == 1:
-                if self.money >= EstateDict[name]['price'] * 2:
-                    self.money = self.money - (EstateDict[name]['price'] * 2)
+            elif EstateDict[self.position]['monopoly'] == 1:
+                if self.money >= EstateDict[self.position]['price'] * 2:
+                    self.money = self.money - (EstateDict[self.position]['price'] * 2)
                     return True
                 else:
-                    self.mortgageProperty(name)
-            elif EstateDict[name]['rent'] > self.money:  # if they don't have the money, mortgage off properties
-                self.mortgageProperty(name)
+                    self.mortgageProperty()
+            elif EstateDict[self.position]['rent'] > self.money:  # if they don't have the money, mortgage off properties
+                self.mortgageProperty()
 
-    def mortgageProperty(self, name):
+    def mortgageProperty(self):
         for property in EstateDict:
             if property['ownerNumber'] == self.number:
                 if property['hotel'] > 0:  # mortgages hotel
                     self.money = self.money + property['houseValue']
                     property['hotel'] = 0
-                    self.payRent(name)
+                    self.payRent()
                 elif property['houses'] > 0:  # mortgages houses
                     self.money = self.money + property['houseValule']
                     property['houses'] = property['houses'] - 1
-                    self.payRent(name)
+                    self.payRent()
                 elif property['mortgaged'] == 0:  # mortgages property itself
                     self.money = self.money + property['mortgageValue']
                     property['mortgaged'] = 1
-                    self.payRent(name)
+                    self.payRent()
         self.isPlayerBankrupt = True  # if we exit for
 
-    def buyProperty(self, name):
-        if EstateDict[name]['available'] == 1 and self.money >= EstateDict[name]['price']:
-            self.money = self.money - EstateDict[name]['price']
-            EstateDict[name]['ownerNumber'] = self.number
+    def buyProperty(self):
+        if EstateDict[self.position]['available'] == 1 and self.money >= EstateDict[self.position]['price']:
+            self.money = self.money - EstateDict[self.position]['price']
+            EstateDict[self.position]['ownerNumber'] = self.number
             return True
         else:
             return False
 
-    def isPropertyOwner(self, name):
-        if EstateDict[name]['ownerNumber'] == self.number:
+    def isPropertyOwner(self):
+        if EstateDict[self.position]['ownerNumber'] == self.number:
             return True
         return False
 
-    def buyProperty(self, name):
-        if EstateDict[name]['available'] == 1:
-            if self.money < EstateDict[name]['price']:
-                return False
-            else:
-                self.money = self.money - EstateDict[name]['price']
-                if self.checkForMonopoly(EstateDict[name]['group']):
-                    for element in EstateDict:
-                        if element['group'] == EstateDict[name]['group'] and element['ownerNumber'] == self.number:
-                            element['monopoly'] = 1
-                EstateDict[name]['ownerNumber'] = self.number
-                return True
+    # def buyProperty(self):
+    #     if EstateDict[self.position]['available'] == 1:
+    #         if self.money < EstateDict[self.position]['price']:
+    #             return False
+    #         else:
+    #             self.money = self.money - EstateDict[self.position]['price']
+    #             if self.checkForMonopoly(EstateDict[self.position]['group']):
+    #                 for element in EstateDict:
+    #                     if element['group'] == EstateDict[self.position]['group'] and element['ownerNumber'] == self.number:
+    #                         element['monopoly'] = 1
+    #             EstateDict[self.position]['ownerNumber'] = self.number
+    #             return True
 
     def checkForMonopoly(self, color):
         self.monopoly = True
