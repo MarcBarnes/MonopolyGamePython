@@ -5,8 +5,9 @@ import sys, pygame, random
 from pygame.locals import *
 from RealEstateDictionary import EstateDict
 import Dice
-import communityChest
-import Chance
+from communityChest import communityChest
+from communityChest import communityChestCard
+from Chance import Chance
 pygame.init()
 
 PLAYERCOLOR = [(0,   0, 255), (0, 255,   0), (255,   0,   0), (255, 255, 0)] #BLUE, GREEN, RED, YELLOW
@@ -198,6 +199,10 @@ class Player:
                         print("Roll Dice")
                         self.move()
                         choice = self.checkCanBuy()
+                        test = str(players[1].position)
+                        print("Position", test)
+                        ifChance = self.CheckforChanceOrChest()
+
                         if choice:
                             waitingToBuy = True
                             while waitingToBuy:
@@ -238,6 +243,97 @@ class Player:
 
         return numTurns
 
+    def CheckforChanceOrChest(self):
+        playerslist = players
+
+        # Community Chest
+        if (self.position == 3 or self.position == 18 or self.position == 34):
+            test = str(self.position)
+            print("Position chest", test)
+            chest = communityChest()
+            currentPlayerCard = chest.selectCardforCurrentPlayer()
+
+            if (currentPlayerCard.type == 'Go To'):
+                self.position == currentPlayerCard.effect
+            elif (currentPlayerCard.type == 'Advance To Go'):
+                self.position == currentPlayerCard.effect
+            elif (currentPlayerCard.type == 'cash'):
+                self.money = self.money - currentPlayerCard.effect
+            elif (currentPlayerCard.type == 'give'):
+                self.money = self.money - 30
+
+                i = 0
+
+                while (i != len(playerslist)):
+                    if (playerslist[i].number != self.number):
+                        playerslist[i].money = playerslist[i].money + 10
+                        i += 1
+                    else:
+                        i += 1
+                        continue
+
+            elif (currentPlayerCard.type == 'recieve'):
+                self.money = self.money + 30
+
+                i = 0
+
+                while (i != len(playerslist)):
+                    if (playerslist[i].number != self.number):
+                        playerslist[i].money = playerslist[i].money + 10
+                        i += 1
+                    else:
+                        i += 1
+                        continue
+            print(currentPlayerCard.type, "within Comutitty chest", self.money)
+            pygame.display.update()
+        # Chance
+        if (self.position == 8 or self.position == 23 or self.position == 37):
+            test = str(self.position)
+            print("Position chest", test)
+            chance = Chance()
+            currentPlayerCard = chance.selectCardforCurrentPlayer()
+
+            if (currentPlayerCard.type == 'Go To'):
+                self.position == currentPlayerCard.effect
+            elif (currentPlayerCard.type == 'Advance To Go'):
+                self.position == currentPlayerCard.effect
+            elif (currentPlayerCard.type == 'Go to Jail'):
+                self.position == currentPlayerCard.effect
+            elif (currentPlayerCard.type == 'Go To Free Parking'):
+                self.position == currentPlayerCard.effect
+            elif (currentPlayerCard.type == 'Go To RailRoads'):
+                self.position == currentPlayerCard.effect
+            elif (currentPlayerCard.type == 'Go To BoardWalk'):
+                self.position == currentPlayerCard.effect
+            elif (currentPlayerCard.type == 'cash'):
+                self.money = self.money - currentPlayerCard.effect
+            elif (currentPlayerCard.type == 'give'):
+                self.money = self.money - 30
+
+                i = 0
+
+                while (i != len(playerslist)):
+                    if (playerslist[i].number != self.number):
+                        playerslist[i].money = playerslist[i].money + 10
+                        i += 1
+                    else:
+                        i += 1
+                        continue
+
+            elif (currentPlayerCard.type == 'recieve'):
+                self.money = self.money + 30
+
+                i = 0
+
+                while (i != len(playerslist)):
+                    if (playerslist[i].number != self.number):
+                        playerslist[i].money = playerslist[i].money + 10
+                        i += 1
+                    else:
+                        i += 1
+                        continue
+            print(currentPlayerCard.type, "within Chance", self.money)
+            pygame.display.update()
     def checkCanBuy(self):
         for i in EstateDict:
             if self.position == i:
