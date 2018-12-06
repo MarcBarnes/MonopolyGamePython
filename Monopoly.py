@@ -78,6 +78,7 @@ class Player:
     def __init__(self, number):
         self.position = 1
         self.number = number
+        self.money = 1500
         if self.number == 1:
             self.pawnColor = PLAYERCOLOR[0]
         if self.number == 2:
@@ -196,6 +197,35 @@ class Player:
                     if RollDice.isOver(pos):
                         print("Roll Dice")
                         self.move()
+                        choice = self.checkCanBuy()
+                        if choice:
+                            waitingToBuy = True
+                            while waitingToBuy:
+                                screen.blit(bg, [0, 0])
+                                prompt = button((255, 255, 255), 754 / 2, 752 * (1 / 3), 400, 100, "Buy?" + EstateDict[self.position]["estateName"])
+                                yes = button((0, 255, 0), 754 / 2 - (754 / 4), 752 / 2, 100, 50, "Yes")
+                                no = button((0, 255, 0), 754 / 2 - (754 * (3 / 4)), 752 / 2, 100, 50, "No")
+                                prompt.draw(screen)
+                                yes.draw(screen)
+                                no.draw(screen)
+                                pygame.display.update()
+                                for event in pygame.event.get():  # end python interpretter if window has been closed
+                                    pos = pygame.mouse.get_pos()
+                                    if event.type == pygame.QUIT:
+                                        running = False
+                                        quit()
+
+                                    if event.type == pygame.MOUSEBUTTONDOWN:  # start has been pushed
+                                        if yes.isOver(pos):
+                                            EstateDict[self.position]["ownerNumber"] = self.number
+                                            self.money = self.money - int(EstateDict[self.position]["price"])
+                                            print("Player ", self.number, "has", self.money)
+                                            waitingToBuy = False
+
+                                    if event.type == pygame.MOUSEBUTTONDOWN:
+                                        if no.isOver(pos):
+                                            waitingToBuy = False
+
                         self.takingTurn = False
 
                 if event.type == pygame.MOUSEBUTTONDOWN:    # buy houses has been pushed
@@ -207,6 +237,15 @@ class Player:
             pygame.display.update()
 
         return numTurns
+
+    def checkCanBuy(self):
+        for i in EstateDict:
+            if self.position == i:
+                print("i is",i)
+                if self.money >= int(EstateDict[i]["price"]):
+                    return True
+                else:
+                    return False
 
     def buyHotel(self, name):
         if EstateDict[name]['houses'] == 4:
