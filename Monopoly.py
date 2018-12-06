@@ -199,9 +199,14 @@ class Player:
                         print("Roll Dice")
                         self.move()
                         choice = self.checkCanBuy()
-                        test = str(players[1].position)
-                        print("Position", test)
-                        ifChance = self.CheckforChanceOrChest()
+                        CorC = self.CheckforChanceOrChest()
+
+                        if CorC:
+                            screen.blit(bg, [0, 0])
+                            prompt = button(PLAYERCOLOR[0], 100, 752 * (1 / 3), 754 - 200, 100, "You drew a Chance or Community Chest Card " )
+                            prompt.draw(screen)
+                            pygame.display.update()
+
 
                         if choice:
                             waitingToBuy = True
@@ -246,6 +251,7 @@ class Player:
     def CheckforChanceOrChest(self):
         playerslist = players
 
+
         # Community Chest
         if (self.position == 3 or self.position == 18 or self.position == 34):
             test = str(self.position)
@@ -284,6 +290,7 @@ class Player:
                     else:
                         i += 1
                         continue
+            return True
             print(currentPlayerCard.type, "within Comutitty chest", self.money)
             pygame.display.update()
         # Chance
@@ -334,6 +341,9 @@ class Player:
                         continue
             print(currentPlayerCard.type, "within Chance", self.money)
             pygame.display.update()
+            return True
+        else:
+            return False
     def checkCanBuy(self):
         for i in EstateDict:
             if self.position == i:
