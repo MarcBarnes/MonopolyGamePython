@@ -93,7 +93,11 @@ class Player:
 
     def move(self):
         num = self.myDice.rollDice()
+        oldPosition = self.position
         self.position = (self.position + num) % 40 + 1
+        if self.position != 31:
+            if self.position < oldPosition:
+                self.money = self.money + 200
 
     def paintPosition(self):
         #random.seed()                                              #uncomment if bored or if you want to play hardmode
