@@ -552,27 +552,33 @@ class Player:
             elif self.number == int(EstateDict[self.position]['ownerNumber']):  # they own it
                 return True ####insert
             elif int(EstateDict[self.position]['rent']) <= self.money and int(EstateDict[self.position]['monopoly']) == 0:  # they don't own it but they have the money to pay for it and no monopoly
-                numHOUSES = EstateDict[self.position]['houses']
-                playerToPay = EstateDict[self.position]['ownerNumber']
+                numHOUSES = int(EstateDict[self.position]['houses'])
+                playerToPay = int(EstateDict[self.position]['ownerNumber'])
+                print(self.number, "has paid", playerToPay , " this much ")
                 if numHOUSES == 0:
-                    self.money = self.money - EstateDict[self.position]['rent']
-                    players[playerToPay].money = players[playerToPay].money + EstateDict[self.position]['rent']
+                    self.money = self.money - int(EstateDict[self.position]['rent'])
+                    players[playerToPay].money = players[playerToPay].money + int(EstateDict[self.position]['rent'])
+                    print(EstateDict[self.position]['rent'])
 
-                elif numHOUSES == 1:
-                    self.money = self.money - EstateDict[self.position]['own']
-                    players[playerToPay].money = players[playerToPay].money + EstateDict[self.position]['own1HouseRent']
+                if numHOUSES == 1:
+                    self.money = self.money - int(EstateDict[self.position]['own1HouseRent'])
+                    players[playerToPay].money = players[playerToPay].money + int(EstateDict[self.position]['own1HouseRent'])
+                    print(EstateDict[self.position]['own1HouseRent'], "1 house rent")
 
-                elif numHOUSES == 2:
-                    self.money = self.money - EstateDict[self.position]['rent']
-                    players[playerToPay].money = players[playerToPay].money + EstateDict[self.position]['own2HouseRent']
+                if numHOUSES == 2:
+                    self.money = self.money - int(EstateDict[self.position]['own2HouseRent'])
+                    players[playerToPay].money = players[playerToPay].money + int(EstateDict[self.position]['own2HouseRent'])
+                    print(EstateDict[self.position]['own2HouseRent'],"2 house rent")
 
-                elif numHOUSES == 3:
-                    self.money = self.money - EstateDict[self.position]['rent']
-                    players[playerToPay].money = players[playerToPay].money + EstateDict[self.position]['own3HouseRent']
+                if numHOUSES == 3:
+                    self.money = self.money - int(EstateDict[self.position]['own3HouseRent'])
+                    players[playerToPay].money = players[playerToPay].money + int(EstateDict[self.position]['own3HouseRent'])
+                    print(EstateDict[self.position]['own3HouseRent'],"3 house rent")
 
-                elif numHOUSES == 4:
-                    self.money = self.money - EstateDict[self.position]['rent']
-                    players[playerToPay].money = players[playerToPay].money + EstateDict[self.position]['own4HouseRent']
+                if numHOUSES == 4:
+                    self.money = self.money - int(EstateDict[self.position]['own4HouseRent'])
+                    players[playerToPay].money = players[playerToPay].money + int(EstateDict[self.position]['own4HouseRent'])
+                    print(EstateDict[self.position]['own4HouseRent'], "4 house rent")
 
 ###end insert
                 return True
