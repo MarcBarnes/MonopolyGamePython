@@ -80,6 +80,7 @@ class Player:
         self.position = 1
         self.number = number
         self.money = 1500
+        self.numProperties = 0
         if self.number == 1:
             self.pawnColor = PLAYERCOLOR[0]
         if self.number == 2:
@@ -253,6 +254,7 @@ class Player:
                                             EstateDict[self.position]["ownerNumber"] = self.number
                                             self.money = self.money - int(EstateDict[self.position]["price"])
                                             print("Player ", self.number, "has", self.money)
+                                            self.numProperties = self.numProperties + 1
                                             waitingToBuy = False
 
                                     if event.type == pygame.MOUSEBUTTONDOWN:
@@ -314,12 +316,40 @@ class Player:
                 if event.type == pygame.MOUSEBUTTONDOWN:    # buy houses has been pushed
                     if BuyHouses.isOver(pos):
                         print("Buying Houses")
+                        self.buyAHouse()
 
             for p in players:
                 p.paintPosition()
             pygame.display.update()
 
         return numTurns
+
+    def buyAHouse(self):
+        jayarama = True
+        while jayarama and self.numProperties != 0:
+            pos = pygame.mouse.get_pos()
+            print("jayarama")
+            for property in sideBar:
+                print("property")
+                for event in pygame.event.get():
+                    if event.type == pygame.MOUSEBUTTONDOWN and property.isOver(pos):
+                        tempButton = property
+                        propertyIndex = 0
+                        for estate in EstateDict:
+                            print(estate)
+                            if EstateDict[estate]["estateName"] == property.text.split(':')[0]:
+                                print(tempButton.text)
+                                propertyIndex = estate
+
+                        if players[theBoard.totalTurnsTaken % theBoard.numPlayers].money >= int(EstateDict[estate]["houseCost"]):
+                            print(propertyIndex)
+                            jayarama = False
+                            EstateDict[propertyIndex]["houses"] = str(int(EstateDict[propertyIndex]["houses"]) + 1)
+                            players[theBoard.totalTurnsTaken % theBoard.numPlayers].money = players[theBoard.totalTurnsTaken % theBoard.numPlayers].money - int(EstateDict[propertyIndex]["houseCost"])
+                            print("you bought", EstateDict[propertyIndex]["estateName"])
+
+                    property.draw(screen)
+                    pygame.display.update()
 
     def CheckforChanceOrChest(self):
         playerslist = players
@@ -638,10 +668,19 @@ def updateSideBar():
     sideBar.clear()
     for estate in EstateDict:
         if int(EstateDict[estate]["ownerNumber"]) == (players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].number):
-            e = button(white, 752, pixelcount, 448, 15, EstateDict[estate]["estateName"])
+            e = button(white, 752, pixelcount, 448, 15, EstateDict[estate]["estateName"] + ": " + EstateDict[estate]["houses"])
             e.draw(screen)
             sideBar.append(e)
             pixelcount = pixelcount + 40
+
+def checkForWin():
+    for p in players:
+        if p.money <= 0:
+            players.remove(p)
+            for p2 in players:
+                max = p2.money
+
+
 
 
 if __name__ == "__main__":
