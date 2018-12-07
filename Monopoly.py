@@ -745,7 +745,7 @@ if __name__ == "__main__":
 
         pygame.display.update()
 
-    WinnerButton = button((255,255,255), 752/2, 754/2, 800, 100, "The Winner is Player " + str(gameWinner) + "!!!!!!!!!!")
+    WinnerButton = button((255,0,0), 752/2, 754/2, 800, 100, "The Winner is Player " + str(gameWinner) + "!!!!!!!!!!")
     WinnerButton.draw(screen)
 
     for p in players:
