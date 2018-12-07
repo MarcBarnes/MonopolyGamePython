@@ -182,6 +182,7 @@ class Player:
     def takeTurn(self, numTurns):                       # print menu for each players turn and add one to turnsTaken and work as the way for the turn to be taken
         self.takingTurn = True                               # true until turn is over
         numTurns = numTurns + 1                         #
+        updateSideBar()
         while self.takingTurn:
             pos = pygame.mouse.get_pos()
             RollDice = button(PLAYERCOLOR[0], 752*(1/4), 754, 200, 50, "Roll Dice")
@@ -515,15 +516,36 @@ class Board:
             pygame.display.flip()
             pygame.display.update()
 
+def updateSideBar():
+    white = (255,255,255)
+    pixelcount = 0
+    whiteOutButton = button(white, 752 , pixelcount, 448, 800, "")
+    whiteOutButton.draw(screen)
+    pixelcount = pixelcount + 40
+    currentPlayer = button(white, 752 , pixelcount, 448, 15, "Player " + str(players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].number) + "\'s turn")
+    currentPlayer.draw(screen)
+    pixelcount = pixelcount + 40
+    currentBank = button(white, 752 , pixelcount, 448, 15, "Money: " + str(players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].money))
+    currentBank.draw(screen)
+    pixelcount = pixelcount + 40
+    sideBar.clear()
+    for estate in EstateDict:
+        if int(EstateDict[estate]["ownerNumber"]) == (players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].number):
+            e = button(white, 752, pixelcount, 448, 15, EstateDict[estate]["estateName"])
+            e.draw(screen)
+            sideBar.append(e)
+            pixelcount = pixelcount + 40
+
 
 if __name__ == "__main__":
     bg = pygame.image.load("monopoly.jpg")
-    width, height = 752, 800                                        # set size of the window. The size of the image is 752,754 but I went to 800 to add space for buttons
+    width, height = 1200, 800                                        # set size of the window. The size of the image is 752,754 but I went to 800 to add space for buttons
     screen = pygame.display.set_mode((width, height))
     theBoard = Board()
     gameHasNotBeenWon = True
     players = []
     i = 1
+    sideBar = []
     while(i <= theBoard.numPlayers):
         p = Player(i)
         players.append(p)
