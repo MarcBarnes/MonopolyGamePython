@@ -90,6 +90,7 @@ class Player:
             self.pawnColor = PLAYERCOLOR[3]
 
         self.myDice = Dice()
+        self.jailCounter = 0
 
     def move(self):
         num = self.myDice.rollDice()
@@ -203,6 +204,7 @@ class Player:
                     if RollDice.isOver(pos):
                         print("Roll Dice")
                         self.move()
+                        self.checkForJail()
                         choice = self.checkCanBuy()
                         i_tax = self.checkForIncomeTax()
                         l_tax = self.checkForLuxuryTax()
@@ -478,6 +480,15 @@ class Player:
 
                 else:
                     return False
+
+    def checkForJail(self):
+        if(self.position == 31):
+            self.position == 11
+
+            self.jailCounter += 1
+
+            if self.jailCounter == 3:
+                self.position = 12
 
     def buyHouse(self):
         if EstateDict[self.position]['houses'] < 4 and EstateDict[self.position]['monopoly']:

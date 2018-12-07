@@ -35,7 +35,7 @@ class Dice(object):
 
             self.counter += 1
             
-            self.total = temp
+            self.total = self.total + temp
             
             self.rollDice()
 
