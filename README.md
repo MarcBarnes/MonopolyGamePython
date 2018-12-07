@@ -1,6 +1,13 @@
-# Monopoly
+Description of Problem
+- The project is an implementation of the game of Monopoly.
 
-LIST OF LIBRARIES USED: PyGame, Random
+Details Regarding UI
+- Select number of players from keyboard.
+
+Python Libraries Used
+- pygame
+- random
+- sys
 
 
       - Dice (Felippe) - RollDice() function returns the total for both rolled die. There is a double checker as well for jail.
@@ -21,5 +28,37 @@ LIST OF LIBRARIES USED: PyGame, Random
       
       - Jail (Nick) - Simple function that pushes player's position from the "Go to Jail" square into the jail square, and keeps them there for three rounds.
 
+Other Resources
+- button implementation
+    https://inventwithpython.com/blog/2012/10/30/designing-a-button-ui-module-for-pygame/
 
-Each did some of our own work, such as Nicholas dealing with making the board and figuring out positioning for all squares, Felippe doing the Dice, Chance, and Chest classes, Sam doing much of the GUI, Marcus doing the dictionary and more, and Chelsea doing most of the player logic and some real estate logic. Overall though, we utilized a lot of pair programming and working together to solve the majority of issues that we faced.
+Extra features beyond proposal
+- No extra features beyond proposal.
+
+Description of separation of work
+- Chelsea implemented
+    Jail logic
+    Pay rent logic and whether the house is available
+    Helper functions in player (buyHouse, payRent, mortgageProperty, buyProperty, isPropertyOwner, checkForMonopoly)
+    Half of Estate Dictionary
+    Double checking
+    writing README
+- Mark:
+    implemented half of Estate Dictionary
+    Assisted with GUI
+    assisted with Chance and Community Chest cards
+    assisted with takeTurn function in player
+- Felippe
+    wrote Community Chest and Chance classes
+    assisted with takeTurn function
+    implemented Dice class
+    in Player class implemented the Community Chest and Chance logic
+- Nick and Sam
+    Board GUI
+    Implemented double checking
+    Making the game loop
+    Making players change position on the board
+    Buying houses and checking whether to pay rent or buy the house
+    Building player sidebar
+    Button class
+    Assisted with Chance and Community Chest
