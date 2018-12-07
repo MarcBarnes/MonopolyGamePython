@@ -1,3 +1,7 @@
+How to Play:
+-Click start button to play, click buy house then names of properties to buy
+-Must have large screen to play on
+
 Description of Problem
 - The project is an implementation of the game of Monopoly.
 
