@@ -545,7 +545,7 @@ class Player:
                 return True ####insert
             elif int(EstateDict[self.position]['rent']) <= self.money and int(EstateDict[self.position]['monopoly']) == 0:  # they don't own it but they have the money to pay for it and no monopoly
                 numHOUSES = int(EstateDict[self.position]['houses'])
-                playerToPay = int(EstateDict[self.position]['ownerNumber'])
+                playerToPay = int(EstateDict[self.position]['ownerNumber'])-1
                 print(self.number, "has paid", playerToPay , " this much ")
                 if numHOUSES == 0:
                     self.money = self.money - int(EstateDict[self.position]['rent'])
@@ -710,17 +710,9 @@ def updateSideBar():
             sideBar.append(e)
             pixelcount = pixelcount + 40
 
-def checkForWin():
-    for p in players:
-        if p.money <= 0:
-            players.remove(p)
-            for p2 in players:
-                max = p2.money
-
-
-
 
 if __name__ == "__main__":
+    gameWinner = 0
     bg = pygame.image.load("monopoly.jpg")
     width, height = 1200, 800                                        # set size of the window. The size of the image is 752,754 but I went to 800 to add space for buttons
     screen = pygame.display.set_mode((width, height))
@@ -742,5 +734,22 @@ if __name__ == "__main__":
         for p in players:
             p.paintPosition()
 
-        
+        for p in players:
+            if p.money < 0:
+                max = 0
+                for p2 in players:
+                    if p2.money > max:
+                        max = p2.money
+                        gameWinner = p2.number
+                        gameHasNotBeenWon = False
+
+        pygame.display.update()
+
+    WinnerButton = button((255,255,255), 752/2, 754/2, 800, 100, "The Winner is Player " + str(gameWinner) + "!!!!!!!!!!")
+    WinnerButton.draw(screen)
+
+    for p in players:
+        print(p.number, "had",p.money)
+
+    while True:
         pygame.display.update()
