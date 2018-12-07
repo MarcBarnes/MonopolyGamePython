@@ -77,7 +77,7 @@ class button():
 
 class Player:
     def __init__(self, number):
-        self.position = 1
+        self.position = 21
         self.number = number
         self.money = 1500
         if self.number == 1:
@@ -306,7 +306,7 @@ class Player:
                                         if pay75.isOver(pos):
                                             self.money = self.money - 75
                                             print("Player ", self.number, "has", self.money, "Player paid $75")
-                                            waitingToPay = False
+                                            waitingToPayLux = False
 
 
                         self.takingTurn = False
@@ -409,10 +409,6 @@ class Player:
                 if self.position > currentPlayerCard.effect:
                     self.money = self.money + 200
                 self.position = currentPlayerCard.effect
-            elif (currentPlayerCard.type == 'Go To BoardWalk'):
-                if self.position > currentPlayerCard.effect:
-                    self.money = self.money + 200
-                self.position = currentPlayerCard.effect
             elif (currentPlayerCard.type == 'cash'):
                 self.money = self.money + currentPlayerCard.effect
             elif (currentPlayerCard.type == 'give'):
@@ -482,13 +478,31 @@ class Player:
                     return False
 
     def checkForJail(self):
-        if(self.position == 31):
-            self.position == 11
 
-            self.jailCounter += 1
 
-            if self.jailCounter == 3:
+        if (self.jailCounter == 1 and self.position == 11):
+
+            self.position = 11
+            self.jailCounter = 2
+
+        elif(self.jailCounter > 1 and self.jailCounter < 4):
+
+            if self.jailCounter == 2:
+                print(self.jailCounter)
+                self.position = 11
+                self.jailCounter = 3
+
+            elif self.jailCounter == 3:
+                print(self.jailCounter)
+                self.jailCounter = 0
                 self.position = 12
+
+        if (self.position == 31):
+            print("PLAYER IS GOING TO JAIL")
+
+            self.jailCounter = 1
+
+            self.position = 11
 
     def buyHouse(self):
         if EstateDict[self.position]['houses'] < 4 and EstateDict[self.position]['monopoly']:
