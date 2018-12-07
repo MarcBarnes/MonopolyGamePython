@@ -25,12 +25,12 @@
     <session id="609801941">
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="805" />
+          <entry key="py" value="821" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="805" />
+          <entry key="Python" value="821" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -54,10 +54,10 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Monopoly.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="303" lean-forward="true" selection-start-line="303" selection-end-line="303" />
+            <state relative-caret-position="85">
+              <caret line="357" lean-forward="true" selection-start-line="357" selection-end-line="357" />
               <folding>
-                <marker date="1544142584504" expanded="true" signature="21571:21766" ph="..." />
+                <marker date="1544142995266" expanded="true" signature="21579:21774" ph="..." />
               </folding>
             </state>
           </provider>
@@ -330,10 +330,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Monopoly.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="303" lean-forward="true" selection-start-line="303" selection-end-line="303" />
+        <state relative-caret-position="85">
+          <caret line="357" lean-forward="true" selection-start-line="357" selection-end-line="357" />
           <folding>
-            <marker date="1544142584504" expanded="true" signature="21571:21766" ph="..." />
+            <marker date="1544142995266" expanded="true" signature="21579:21774" ph="..." />
           </folding>
         </state>
       </provider>

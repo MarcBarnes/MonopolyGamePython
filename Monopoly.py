@@ -340,7 +340,7 @@ class Player:
 
                 j = 0
 
-                while(j != len(playerslist)):
+                while(j != len(playerslist)-1):
                     self.money = self.money - 10
                     j += 1
 
@@ -358,7 +358,7 @@ class Player:
 
                 j = 0
 
-                while (j != len(playerslist)):
+                while (j != len(playerslist)-1):
                     self.money = self.money + 10
                     j += 1
 
@@ -366,7 +366,7 @@ class Player:
 
                 while (i != len(playerslist)):
                     if (playerslist[i].number != self.number):
-                        playerslist[i].money = playerslist[i].money + 10
+                        playerslist[i].money = playerslist[i].money - 10
                         i += 1
                     else:
                         i += 1
@@ -412,7 +412,7 @@ class Player:
 
                 j = 0
 
-                while (j != len(playerslist)):
+                while (j != len(playerslist)-1):
                     self.money = self.money - 10
                     j += 1
 
@@ -429,7 +429,7 @@ class Player:
             elif (currentPlayerCard.type == 'receive'):
                 j = 0
 
-                while (j != len(playerslist)):
+                while (j != len(playerslist)-1):
                     self.money = self.money + 10
                     j += 1
 
