@@ -223,7 +223,6 @@ class Player:
                                             print("Player ", self.number, "has", self.money)
                                             waitingToClick = False
 
-
                         if choice:
                             waitingToBuy = True
                             while waitingToBuy:
@@ -277,7 +276,7 @@ class Player:
 
                                     if event.type == pygame.MOUSEBUTTONDOWN:
                                         if buttonPay10P.isOver(pos):
-                                            self.money = self.money - .10(self.money)
+                                            self.money = self.money - .1*self.money
                                             print("Player ", self.number, "has", self.money,"Player paid 10% of current money")
                                             waitingToPay = False
 
@@ -431,12 +430,12 @@ class Player:
 
     def checkForIncomeTax(self):
 
-        if self.position == '5':
+        if self.position == 5:
             return True
         return False
 
     def checkForLuxuryTax(self):
-        if self.position == '39':
+        if self.position == 39:
             self.money = self.money - 75
             return True
         return False
