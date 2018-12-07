@@ -77,7 +77,8 @@ class button():
 
 class Player:
     def __init__(self, number):
-        self.position = 21
+        self.position = 1
+        self.isPlayerBankrupt = False
         self.number = number
         self.money = 1500
         self.numProperties = 0
@@ -340,6 +341,9 @@ class Player:
                             if EstateDict[estate]["estateName"] == property.text.split(':')[0]:
                                 print(tempButton.text)
                                 propertyIndex = estate
+                        if int(EstateDict[propertyIndex]["houses"]) > 3:
+                            jayarama = False
+                            break
 
                         if players[theBoard.totalTurnsTaken % theBoard.numPlayers].money >= int(EstateDict[estate]["houseCost"]):
                             print(propertyIndex)
@@ -505,17 +509,11 @@ class Player:
                         return False
 
                 else:
+                    self.payRent()
                     return False
 
     def checkForJail(self):
-
-
-        if (self.jailCounter == 1 and self.position == 11):
-
-            self.position = 11
-            self.jailCounter = 2
-
-        elif(self.jailCounter > 1 and self.jailCounter < 4):
+        if(self.jailCounter > 1 and self.jailCounter < 4):
 
             if self.jailCounter == 2:
                 print(self.jailCounter)
@@ -534,6 +532,11 @@ class Player:
 
             self.position = 11
 
+        if (self.jailCounter == 1 and self.position == 11):
+
+            self.position = 11
+            self.jailCounter = 2
+
     def buyHouse(self):
         if EstateDict[self.position]['houses'] < 4 and EstateDict[self.position]['monopoly']:
             self.money = self.money - EstateDict[self.position]['houseCost']
@@ -546,10 +549,32 @@ class Player:
         while self.playerHasPaid == False:
             if self.isPlayerBankrupt:
                 return False
-            elif self.number == EstateDict[self.position]['ownerNumber']:  # they own it
-                return True
-            elif EstateDict[self.position]['rent'] <= self.money and EstateDict[self.position]['monopoly'] == 0:      # they don't own it but they have the money to pay for it and no monopoly
-                self.money = self.money - EstateDict[self.position]['rent']
+            elif self.number == int(EstateDict[self.position]['ownerNumber']):  # they own it
+                return True ####insert
+            elif int(EstateDict[self.position]['rent']) <= self.money and int(EstateDict[self.position]['monopoly']) == 0:  # they don't own it but they have the money to pay for it and no monopoly
+                numHOUSES = EstateDict[self.position]['houses']
+                playerToPay = EstateDict[self.position]['ownerNumber']
+                if numHOUSES == 0:
+                    self.money = self.money - EstateDict[self.position]['rent']
+                    players[playerToPay].money = players[playerToPay].money + EstateDict[self.position]['rent']
+
+                elif numHOUSES == 1:
+                    self.money = self.money - EstateDict[self.position]['own']
+                    players[playerToPay].money = players[playerToPay].money + EstateDict[self.position]['own1HouseRent']
+
+                elif numHOUSES == 2:
+                    self.money = self.money - EstateDict[self.position]['rent']
+                    players[playerToPay].money = players[playerToPay].money + EstateDict[self.position]['own2HouseRent']
+
+                elif numHOUSES == 3:
+                    self.money = self.money - EstateDict[self.position]['rent']
+                    players[playerToPay].money = players[playerToPay].money + EstateDict[self.position]['own3HouseRent']
+
+                elif numHOUSES == 4:
+                    self.money = self.money - EstateDict[self.position]['rent']
+                    players[playerToPay].money = players[playerToPay].money + EstateDict[self.position]['own4HouseRent']
+
+###end insert
                 return True
             elif EstateDict[self.position]['monopoly'] == 1:
                 if self.money >= EstateDict[self.position]['price'] * 2:
