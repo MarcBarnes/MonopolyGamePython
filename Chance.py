@@ -34,7 +34,6 @@ class Chance:
              chanceCard('Go To Jail', 31),
              chanceCard('Go To Free Parking', 21),
              chanceCard('Go To RailRoads', random.choice(RAILROADS)),
-             chanceCard('Go to BoardWalk', 40),
              chanceCard('cash',random.choice(CASH)),
              chanceCard('give', 10), #to every other player
              chanceCard('receive', 10) #to every other player
