@@ -199,7 +199,7 @@ class Player:
                         print("Roll Dice")
                         self.move()
                         choice = self.checkCanBuy()
-
+                        i_tax = self.checkForIncomeTax()
 
                         if self.position == 3 or self.position == 8 or self.position == 18 or self.position == 23 or self.position == 34 or self.position == 37:
                             waitingToClick = True
@@ -251,6 +251,35 @@ class Player:
                                     if event.type == pygame.MOUSEBUTTONDOWN:
                                         if no.isOver(pos):
                                             waitingToBuy = False
+
+                        if i_tax:
+                            waitingToPay = True
+                            while waitingToPay:
+                                screen.blit(bg, [0, 0])
+                                prompt = button(PLAYERCOLOR[0], 100, 752 * (1 / 3), 754 -200, 100, "Pay Income Tax")
+                                buttonPay200 = button((0, 255, 0), 754 / 2 - (754 * (1/4)), 752 / 2, 75, 50, "$200")
+                                buttonPay10P = button((255, 0, 0), 754 / 2 + (754 * (1/4)), 752 / 2, 75, 50, "10%")
+                                prompt.draw(screen)
+                                buttonPay200.draw(screen)
+                                buttonPay10P.draw(screen)
+                                pygame.display.update()
+                                for event in pygame.event.get():  # end python interpretter if window has been closed
+                                    pos = pygame.mouse.get_pos()
+                                    if event.type == pygame.QUIT:
+                                        running = False
+                                        quit()
+
+                                    if event.type == pygame.MOUSEBUTTONDOWN:  # start has been pushed
+                                        if buttonPay200.isOver(pos):
+                                            self.money = self.money - 200
+                                            print("Player ", self.number, "has", self.money, "Player paid $200")
+                                            waitingToPay = False
+
+                                    if event.type == pygame.MOUSEBUTTONDOWN:
+                                        if buttonPay10P.isOver(pos):
+                                            self.money = self.money - .10(self.money)
+                                            print("Player ", self.number, "has", self.money,"Player paid 10% of current money")
+                                            waitingToPay = False
 
                         self.takingTurn = False
 
@@ -399,6 +428,18 @@ class Player:
                 print("NEW POSITION", p.position)
 
             return currentPlayerCard
+
+    def checkForIncomeTax(self):
+
+        if self.position == '5':
+            return True
+        return False
+
+    def checkForLuxuryTax(self):
+        if self.position == '39':
+            self.money = self.money - 75
+            return True
+        return False
 
     def checkCanBuy(self):
         for i in EstateDict:
