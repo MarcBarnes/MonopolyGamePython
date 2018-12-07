@@ -1,5 +1,5 @@
-.__pycache__
-.idea/
+.__pycache__/*
+.idea/*
 .idea/workspace.xml
 .idea/workspace.xml
 *.xml
