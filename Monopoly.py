@@ -200,6 +200,7 @@ class Player:
                         self.move()
                         choice = self.checkCanBuy()
                         i_tax = self.checkForIncomeTax()
+                        l_tax = self.checkForLuxuryTax()
 
                         if self.position == 3 or self.position == 8 or self.position == 18 or self.position == 23 or self.position == 34 or self.position == 37:
                             waitingToClick = True
@@ -279,6 +280,27 @@ class Player:
                                             self.money = self.money - .1*self.money
                                             print("Player ", self.number, "has", self.money,"Player paid 10% of current money")
                                             waitingToPay = False
+                        if l_tax:
+                            waitingToPayLux = True
+                            while waitingToPayLux:
+                                screen.blit(bg, [0, 0])
+                                prompt = button(PLAYERCOLOR[0], 100, 752 * (1 / 3), 754 -200, 100, "Pay Luxury Tax")
+                                pay75 = button((0, 255, 0), 754 / 2 - (754 * (1 / 4)), 752 / 2, 75, 50, "$75")
+                                prompt.draw(screen)
+                                pay75.draw(screen)
+                                pygame.display.update()
+                                for event in pygame.event.get():  # end python interpretter if window has been closed
+                                    pos = pygame.mouse.get_pos()
+                                    if event.type == pygame.QUIT:
+                                        running = False
+                                        quit()
+
+                                    if event.type == pygame.MOUSEBUTTONDOWN:  # start has been pushed
+                                        if pay75.isOver(pos):
+                                            self.money = self.money - 75
+                                            print("Player ", self.number, "has", self.money, "Player paid $75")
+                                            waitingToPay = False
+
 
                         self.takingTurn = False
 
@@ -435,8 +457,8 @@ class Player:
         return False
 
     def checkForLuxuryTax(self):
+
         if self.position == 39:
-            self.money = self.money - 75
             return True
         return False
 
