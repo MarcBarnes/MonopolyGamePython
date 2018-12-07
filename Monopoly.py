@@ -354,6 +354,7 @@ class Player:
 
                     property.draw(screen)
                     pygame.display.update()
+        updateSideBar()
 
     def CheckforChanceOrChest(self):
         playerslist = players
@@ -513,29 +514,20 @@ class Player:
                     return False
 
     def checkForJail(self):
-        if(self.jailCounter > 1 and self.jailCounter < 4):
 
-            if self.jailCounter == 2:
-                print(self.jailCounter)
-                self.position = 11
-                self.jailCounter = 3
-
-            elif self.jailCounter == 3:
-                print(self.jailCounter)
+        if (self.jailCounter != 0):
+            if (self.jailCounter == 3):
                 self.jailCounter = 0
                 self.position = 12
-
-        if (self.position == 31):
-            print("PLAYER IS GOING TO JAIL")
-
+            elif (self.jailCounter == 2):
+                self.position = 11
+                self.jailCounter = 3
+            elif (self.jailCounter == 1):
+                self.position = 11
+                self.jailCounter = 2
+        elif (self.position == 31):
             self.jailCounter = 1
-
             self.position = 11
-
-        if (self.jailCounter == 1 and self.position == 11):
-
-            self.position = 11
-            self.jailCounter = 2
 
     def buyHouse(self):
         if EstateDict[self.position]['houses'] < 4 and EstateDict[self.position]['monopoly']:
@@ -558,7 +550,7 @@ class Player:
                 if numHOUSES == 0:
                     self.money = self.money - int(EstateDict[self.position]['rent'])
                     players[playerToPay].money = players[playerToPay].money + int(EstateDict[self.position]['rent'])
-                    print(EstateDict[self.position]['rent'])
+                    print(EstateDict[self.position]['rent'], "0 house rent")
 
                 if numHOUSES == 1:
                     self.money = self.money - int(EstateDict[self.position]['own1HouseRent'])
@@ -750,4 +742,5 @@ if __name__ == "__main__":
         for p in players:
             p.paintPosition()
 
+        
         pygame.display.update()
