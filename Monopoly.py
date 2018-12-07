@@ -308,7 +308,6 @@ class Player:
                 if event.type == pygame.MOUSEBUTTONDOWN:    # buy houses has been pushed
                     if BuyHouses.isOver(pos):
                         print("Buying Houses")
-                        self.buyAHouse()
 
             for p in players:
                 p.paintPosition()
@@ -316,38 +315,12 @@ class Player:
 
         return numTurns
 
-    def buyAHouse(self):
-        jayarama = True
-        while jayarama:
-            pos = pygame.mouse.get_pos()
-            print("jayarama")
-            for property in sideBar:
-                print("property")
-                for event in pygame.event.get():
-                    if event.type == pygame.MOUSEBUTTONDOWN and property.isOver(pos):
-                        tempButton = property
-                        propertyIndex = 0
-                        for estate in EstateDict:
-                            print(estate)
-                            if EstateDict[estate]["estateName"] == property.text.split(':')[0]:
-                                print(tempButton.text)
-                                propertyIndex = estate
-
-                        if players[theBoard.totalTurnsTaken % theBoard.numPlayers].money >= int(EstateDict[estate]["houseCost"]):
-                            print(propertyIndex)
-                            jayarama = False
-                            EstateDict[propertyIndex]["houses"] = str(int(EstateDict[propertyIndex]["houses"]) + 1)
-                            players[theBoard.totalTurnsTaken % theBoard.numPlayers].money = players[theBoard.totalTurnsTaken % theBoard.numPlayers].money - int(EstateDict[propertyIndex]["houseCost"])
-                            print("you bought", EstateDict[propertyIndex]["estateName"])
-
-                    property.draw(screen)
-                    pygame.display.update()
-
     def CheckforChanceOrChest(self):
         playerslist = players
 
         for p in playerslist:
             print("INITIAL POSITION", p.position)
+
 
         # Community Chest
         if (self.position == 3 or self.position == 18 or self.position == 34):
@@ -650,7 +623,7 @@ def updateSideBar():
     sideBar.clear()
     for estate in EstateDict:
         if int(EstateDict[estate]["ownerNumber"]) == (players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].number):
-            e = button(white, 752, pixelcount, 448, 15, EstateDict[estate]["estateName"] + ": " + EstateDict[estate]["houses"])
+            e = button(white, 752, pixelcount, 448, 15, EstateDict[estate]["estateName"])
             e.draw(screen)
             sideBar.append(e)
             pixelcount = pixelcount + 40
