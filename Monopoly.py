@@ -10,7 +10,7 @@ from Chance import Chance
 pygame.init()
 
 PLAYERCOLOR = [(0,   0, 255), (0, 255,   0), (255,   0,   0), (255, 255, 0)] #BLUE, GREEN, RED, YELLOW
-BUTTONCOLOR = [(137,224,34), (0, 255, 0), (255, 0, 0), (192,192,192)]
+BUTTONCOLOR = [(11,253,114), (0, 255, 0), (255, 0, 0), (192,192,192)]
 import random
 
 
@@ -98,7 +98,8 @@ class Player:
     def move(self):
         num = self.myDice.rollDice()
         oldPosition = self.position
-        self.position = (self.position + num) % 40 + 1
+        #self.position = (self.position + num) % 40 + 1
+        self.position = (self.position + num) % 40 
         if self.position != 31:
             if self.position < oldPosition:
                 self.money = self.money + 200
@@ -108,85 +109,85 @@ class Player:
         #self.position = random.randint(1,40)
         #print("Number: " + str(self.number))
         if self.position == 1: 
-            a1 = pygame.draw.circle(screen, self.pawnColor, (700, 700 + self.number), 20, 0)
+            a1 = pygame.draw.circle(screen, self.pawnColor, (720, 720 + self.number), 18, 0)
         if self.position == 2:
-            a2 = pygame.draw.circle(screen, self.pawnColor, (630, 700 + self.number), 20, 0)
+            a2 = pygame.draw.circle(screen, self.pawnColor, (630, 720 + self.number), 18, 0)
         if self.position == 3:
-            a3 = pygame.draw.circle(screen, self.pawnColor, (565, 700 + self.number), 20, 0)
+            a3 = pygame.draw.circle(screen, self.pawnColor, (565, 720 + self.number), 18, 0)
         if self.position == 4:
-            a4 = pygame.draw.circle(screen, self.pawnColor, (500, 700 + self.number), 20, 0)
+            a4 = pygame.draw.circle(screen, self.pawnColor, (500, 720 + self.number), 18, 0)
         if self.position == 5:
-            a5 = pygame.draw.circle(screen, self.pawnColor, (440, 700 + self.number), 20, 0)
+            a5 = pygame.draw.circle(screen, self.pawnColor, (440, 720 + self.number), 18, 0)
         if self.position == 6:
-            a6 = pygame.draw.circle(screen, self.pawnColor, (380, 700 + self.number), 20, 0)
+            a6 = pygame.draw.circle(screen, self.pawnColor, (380, 720 + self.number), 18, 0)
         if self.position == 7:
-            a7 = pygame.draw.circle(screen, self.pawnColor, (315, 700 + self.number), 20, 0)
+            a7 = pygame.draw.circle(screen, self.pawnColor, (315, 720 + self.number), 18, 0)
         if self.position == 8:
-            a8 = pygame.draw.circle(screen, self.pawnColor, (255, 700 + self.number), 20, 0)
+            a8 = pygame.draw.circle(screen, self.pawnColor, (255, 720 + self.number), 18, 0)
         if self.position == 9:
-            a9 = pygame.draw.circle(screen, self.pawnColor, (190, 700 + self.number), 20, 0)
+            a9 = pygame.draw.circle(screen, self.pawnColor, (190, 720 + self.number), 18, 0)
         if self.position == 10:
-            a10 = pygame.draw.circle(screen, self.pawnColor, (130, 700 + self.number), 20, 0)
+            a10 = pygame.draw.circle(screen, self.pawnColor, (130, 720 + self.number), 18, 0)
         if self.position == 11:
-            a11 = pygame.draw.circle(screen, self.pawnColor, (60, 700 + self.number), 20, 0)
+            a11 = pygame.draw.circle(screen, self.pawnColor, (40, 720 + self.number), 18, 0)
         if self.position == 12:
-            a12 = pygame.draw.circle(screen, self.pawnColor, (60, 630 + self.number), 20, 0)
+            a12 = pygame.draw.circle(screen, self.pawnColor, (40, 630 + self.number), 18, 0)
         if self.position == 13:
-            a13 = pygame.draw.circle(screen, self.pawnColor, (60, 565 + self.number), 20, 0)
+            a13 = pygame.draw.circle(screen, self.pawnColor, (40, 565 + self.number), 18, 0)
         if self.position == 14:
-            a14 = pygame.draw.circle(screen, self.pawnColor, (60, 505 + self.number), 20, 0)
+            a14 = pygame.draw.circle(screen, self.pawnColor, (40, 505 + self.number), 18, 0)
         if self.position == 15:
-            a15 = pygame.draw.circle(screen, self.pawnColor, (60, 445 + self.number), 20, 0)
+            a15 = pygame.draw.circle(screen, self.pawnColor, (40, 445 + self.number), 18, 0)
         if self.position == 16:
-            a16 = pygame.draw.circle(screen, self.pawnColor, (60, 380 + self.number), 20, 0)
+            a16 = pygame.draw.circle(screen, self.pawnColor, (40, 380 + self.number), 18, 0)
         if self.position == 17:
-            a17 = pygame.draw.circle(screen, self.pawnColor, (60, 315 + self.number), 20, 0)
+            a17 = pygame.draw.circle(screen, self.pawnColor, (40, 315 + self.number), 18, 0)
         if self.position == 18:
-            a18 = pygame.draw.circle(screen, self.pawnColor, (60, 250 + self.number), 20, 0)
+            a18 = pygame.draw.circle(screen, self.pawnColor, (40, 250 + self.number), 18, 0)
         if self.position == 19:
-            a19 = pygame.draw.circle(screen, self.pawnColor, (60, 185 + self.number), 20, 0)
+            a19 = pygame.draw.circle(screen, self.pawnColor, (40, 185 + self.number), 18, 0)
         if self.position == 20:
-            a20 = pygame.draw.circle(screen, self.pawnColor, (60, 120 + self.number), 20, 0)
+            a20 = pygame.draw.circle(screen, self.pawnColor, (40, 120 + self.number), 18, 0)
         if self.position == 21:
-            a21 = pygame.draw.circle(screen, self.pawnColor, (60, 50 + self.number), 20, 0)
+            a21 = pygame.draw.circle(screen, self.pawnColor, (40, 30 + self.number), 18, 0)
         if self.position == 22:
-            a22 = pygame.draw.circle(screen, self.pawnColor, (125, 50 + self.number), 20, 0)
+            a22 = pygame.draw.circle(screen, self.pawnColor, (125, 30 + self.number), 18, 0)
         if self.position == 23:
-            a23 = pygame.draw.circle(screen, self.pawnColor, (190, 50 + self.number), 20, 0)
+            a23 = pygame.draw.circle(screen, self.pawnColor, (190, 30 + self.number), 18, 0)
         if self.position == 24:
-            a24 = pygame.draw.circle(screen, self.pawnColor, (250, 50 + self.number), 20, 0)
+            a24 = pygame.draw.circle(screen, self.pawnColor, (250, 30 + self.number), 18, 0)
         if self.position == 25:
-            a25 = pygame.draw.circle(screen, self.pawnColor, (310, 50 + self.number), 20, 0)
+            a25 = pygame.draw.circle(screen, self.pawnColor, (310, 30 + self.number), 18, 0)
         if self.position == 26:
-            a26 = pygame.draw.circle(screen, self.pawnColor, (375, 50 + self.number), 20, 0)
+            a26 = pygame.draw.circle(screen, self.pawnColor, (375, 30 + self.number), 18, 0)
         if self.position == 27:
-            a27 = pygame.draw.circle(screen, self.pawnColor, (440, 50 + self.number), 20, 0)
+            a27 = pygame.draw.circle(screen, self.pawnColor, (440, 30 + self.number), 18, 0)
         if self.position == 28:
-            a28 = pygame.draw.circle(screen, self.pawnColor, (505, 50 + self.number), 20, 0)
+            a28 = pygame.draw.circle(screen, self.pawnColor, (505, 30 + self.number), 18, 0)
         if self.position == 29:
-            a29 = pygame.draw.circle(screen, self.pawnColor, (570, 50 + self.number), 20, 0)
+            a29 = pygame.draw.circle(screen, self.pawnColor, (570, 30 + self.number), 18, 0)
         if self.position == 30:
-            a30 = pygame.draw.circle(screen, self.pawnColor, (630, 50 + self.number), 20, 0)
+            a30 = pygame.draw.circle(screen, self.pawnColor, (630, 30 + self.number), 18, 0)
         if self.position == 31:
-            a31 = pygame.draw.circle(screen, self.pawnColor, (700, 50 + self.number), 20, 0)
+            a31 = pygame.draw.circle(screen, self.pawnColor, (720, 30 + self.number), 18, 0)
         if self.position == 32:
-            a32 = pygame.draw.circle(screen, self.pawnColor, (700, 125 + self.number), 20, 0)
+            a32 = pygame.draw.circle(screen, self.pawnColor, (720, 125 + self.number), 18, 0)
         if self.position == 33:
-            a33 = pygame.draw.circle(screen, self.pawnColor, (700, 195 + self.number), 20, 0)
+            a33 = pygame.draw.circle(screen, self.pawnColor, (720, 195 + self.number), 18, 0)
         if self.position == 34:
-            a34 = pygame.draw.circle(screen, self.pawnColor, (700, 255 + self.number), 20, 0)
+            a34 = pygame.draw.circle(screen, self.pawnColor, (720, 255 + self.number), 18, 0)
         if self.position == 35:
-            a35 = pygame.draw.circle(screen, self.pawnColor, (700, 315 + self.number), 20, 0)
+            a35 = pygame.draw.circle(screen, self.pawnColor, (720, 315 + self.number), 18, 0)
         if self.position == 36:
-            a36 = pygame.draw.circle(screen, self.pawnColor, (700, 375 + self.number), 20, 0)
+            a36 = pygame.draw.circle(screen, self.pawnColor, (720, 375 + self.number), 18, 0)
         if self.position == 37:
-            a37 = pygame.draw.circle(screen, self.pawnColor, (700, 440 + self.number), 20, 0)
+            a37 = pygame.draw.circle(screen, self.pawnColor, (720, 440 + self.number), 18, 0)
         if self.position == 38:
-            a38 = pygame.draw.circle(screen, self.pawnColor, (700, 505 + self.number), 20, 0)
+            a38 = pygame.draw.circle(screen, self.pawnColor, (720, 505 + self.number), 18, 0)
         if self.position == 39:
-            a39 = pygame.draw.circle(screen, self.pawnColor, (700, 560 + self.number), 20, 0)
+            a39 = pygame.draw.circle(screen, self.pawnColor, (720, 560 + self.number), 18, 0)
         if self.position == 40:
-            a40 = pygame.draw.circle(screen, self.pawnColor, (700, 625 + self.number), 20, 0)
+            a40 = pygame.draw.circle(screen, self.pawnColor, (720, 625 + self.number), 18, 0)
 
     def takeTurn(self, numTurns):                       # print menu for each players turn and add one to turnsTaken and work as the way for the turn to be taken
         self.takingTurn = True                               # true until turn is over
@@ -194,9 +195,10 @@ class Player:
         updateSideBar()
         while self.takingTurn:
             pos = pygame.mouse.get_pos()
-            RollDice = button(BUTTONCOLOR[0], 752+50, 450, 200, 50, "Roll Dice",36)
+            RollDice = button(PLAYERCOLOR[self.number-1], 752*(1/4), 755, 200, 40, "Roll Dice",32)
             RollDice.draw(screen)
-            BuyHouses = button(PLAYERCOLOR[1], 752+50, 550, 200, 50, "Buy Houses",36)
+            BuyHouses = button(PLAYERCOLOR[self.number-1], 400, 755, 250, 40, "BUY HOUSES",32)
+            
             BuyHouses.draw(screen)
             pos = pygame.mouse.get_pos()
             for event in pygame.event.get():  # end python interpretter if window has been closed
@@ -219,8 +221,8 @@ class Player:
                             while waitingToClick:
                                 #print("Within CooC function")
                                 screen.blit(bg, [0, 0])
-                                prompt = button(PLAYERCOLOR[0], 100, 752 * (1 / 3), 754 - 200, 100, str(currentPlayerCard))
-                                ok = button(BUTTONCOLOR[3], 754 / 2 - (754 * (1 / 4)), 752 / 2, 75, 50, "Ok")
+                                prompt = button(PLAYERCOLOR[self.number-1], 100, 752 * (1 / 3), 754 - 200, 100, str(currentPlayerCard), 24)
+                                ok = button(BUTTONCOLOR[1], 754 / 2 - (754 * (1 / 4)), 752 / 2, 75, 50, "Ok")
                                 ok.draw(screen)
                                 prompt.draw(screen)
                                 pygame.display.update()
@@ -239,9 +241,9 @@ class Player:
                             waitingToBuy = True
                             while waitingToBuy:
                                 screen.blit(bg, [0, 0])
-                                prompt = button(PLAYERCOLOR[0], 100, 752 * (1 / 3), 754 -200, 100, "Buy " + EstateDict[self.position]["estateName"] + " ?")
-                                yes = button((0, 255, 0), 754 / 2 - (754 * (1/4)), 752 / 2, 75, 50, "Yes")
-                                no = button((255, 0, 0), 754 / 2 + (754 * (1/4)), 752 / 2, 75, 50, "No")
+                                prompt = button(PLAYERCOLOR[self.number-1], 100, 752 * (1 / 3), 754 -200, 100, "Buy " + EstateDict[self.position]["estateName"] + " ?", 24)
+                                yes = button((0, 255, 0), 754 / 2 - (754 * (1/4)), 752 / 2, 75, 50, "Yes", 36)
+                                no = button((255, 0, 0), 754 / 2 + (754 * (1/4)), 752 / 2, 75, 50, "No", 36)
                                 prompt.draw(screen)
                                 yes.draw(screen)
                                 no.draw(screen)
@@ -329,14 +331,14 @@ class Player:
 
     def buyAHouse(self):
         jayarama = True
-        while jayarama and self.numProperties != 0:
+        if self.numProperties != 0:
             pos = pygame.mouse.get_pos()
-            print("jayarama")
+            print("jayarama " + str(self.numProperties))
             for property in sideBar:
-                print("property")
                 for event in pygame.event.get():
                     if event.type == pygame.MOUSEBUTTONDOWN and property.isOver(pos):
                         tempButton = property
+                        print("Houses Index: " + str(EstateDict[propertyIndex]["houses"]))
                         propertyIndex = 0
                         for estate in EstateDict:
                             print(estate)
@@ -356,6 +358,7 @@ class Player:
 
                     property.draw(screen)
                     pygame.display.update()
+                    break
         updateSideBar()
 
     def CheckforChanceOrChest(self):
@@ -699,16 +702,16 @@ def updateSideBar():
     whiteOutButton = button(white, 752 , pixelcount, 448, 800, "")
     whiteOutButton.draw(screen)
     pixelcount = pixelcount + 40
-    currentPlayer = button(white, 752 , pixelcount, 448, 15, "Player " + str(players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].number) + "\'s turn")
+    currentPlayer = button(white, 752 , pixelcount, 448, 15, "Player " + str(players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].number) + "\'s turn", 24)
     currentPlayer.draw(screen)
     pixelcount = pixelcount + 40
-    currentBank = button(white, 752 , pixelcount, 448, 15, "Money: " + str(players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].money))
+    currentBank = button(white, 752 , pixelcount, 448, 15, "Money: " + str(players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].money), 24)
     currentBank.draw(screen)
     pixelcount = pixelcount + 40
     sideBar.clear()
     for estate in EstateDict:
         if int(EstateDict[estate]["ownerNumber"]) == (players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].number):
-            e = button(white, 752, pixelcount, 448, 15, EstateDict[estate]["estateName"] + ": " + EstateDict[estate]["houses"])
+            e = button(white, 752, pixelcount, 448, 15, EstateDict[estate]["estateName"] + ": " + EstateDict[estate]["houses"], 24)
             e.draw(screen)
             sideBar.append(e)
             pixelcount = pixelcount + 40
