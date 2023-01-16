@@ -1,5 +1,4 @@
 # decent example of buttons
-# https://inventwithpython.com/blog/2012/10/30/designing-a-button-ui-module-for-pygame/
 
 import sys, pygame, random
 from pygame.locals import *
@@ -11,7 +10,7 @@ from Chance import Chance
 pygame.init()
 
 PLAYERCOLOR = [(0,   0, 255), (0, 255,   0), (255,   0,   0), (255, 255, 0)] #BLUE, GREEN, RED, YELLOW
-
+BUTTONCOLOR = [(137,224,34), (0, 255, 0), (255, 0, 0), (192,192,192)]
 import random
 
 
@@ -32,6 +31,7 @@ class Dice(object):
         self.total += self.dice2
         print("Sum of both Dices is: " + str(self.total))
         self.doubleChecker()
+        print("Double: " + str(self.counter))
         return self.total
 
     def doubleChecker(self):
@@ -46,13 +46,14 @@ class Dice(object):
 
 
 class button():
-    def __init__(self, color, x, y, width, height, text=''):
+    def __init__(self, color, x, y, width, height, text='', fontsize=46):
         self.color = color
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.text = text
+        self.fontsize = fontsize
 
     def draw(self, win, outline=None):
         # Call this method to draw the button on the screen
@@ -61,7 +62,7 @@ class button():
 
         pygame.draw.rect(win, self.color, (self.x, self.y, self.width, self.height), 0)
         if self.text != '':
-            font = pygame.font.SysFont('comicsans', 60)
+            font = pygame.font.SysFont('comicsans', self.fontsize)
             text = font.render(self.text, 1, (0, 0, 0))
             win.blit(text, (
             self.x + (self.width / 2 - text.get_width() / 2), self.y + (self.height / 2 - text.get_height() / 2)))
@@ -105,7 +106,8 @@ class Player:
     def paintPosition(self):
         #random.seed()                                              #uncomment if bored or if you want to play hardmode
         #self.position = random.randint(1,40)
-        if self.position == 1:
+        #print("Number: " + str(self.number))
+        if self.position == 1: 
             a1 = pygame.draw.circle(screen, self.pawnColor, (700, 700 + self.number), 20, 0)
         if self.position == 2:
             a2 = pygame.draw.circle(screen, self.pawnColor, (630, 700 + self.number), 20, 0)
@@ -192,9 +194,9 @@ class Player:
         updateSideBar()
         while self.takingTurn:
             pos = pygame.mouse.get_pos()
-            RollDice = button(PLAYERCOLOR[0], 752*(1/4), 754, 200, 50, "Roll Dice")
+            RollDice = button(BUTTONCOLOR[0], 752+50, 450, 200, 50, "Roll Dice",36)
             RollDice.draw(screen)
-            BuyHouses = button(PLAYERCOLOR[1], 400, 754, 300, 50, "BUY HOUSES")
+            BuyHouses = button(PLAYERCOLOR[1], 752+50, 550, 200, 50, "Buy Houses",36)
             BuyHouses.draw(screen)
             pos = pygame.mouse.get_pos()
             for event in pygame.event.get():  # end python interpretter if window has been closed
@@ -218,7 +220,7 @@ class Player:
                                 #print("Within CooC function")
                                 screen.blit(bg, [0, 0])
                                 prompt = button(PLAYERCOLOR[0], 100, 752 * (1 / 3), 754 - 200, 100, str(currentPlayerCard))
-                                ok = button((0, 255, 0), 754 / 2 - (754 * (1 / 4)), 752 / 2, 75, 50, "Ok")
+                                ok = button(BUTTONCOLOR[3], 754 / 2 - (754 * (1 / 4)), 752 / 2, 75, 50, "Ok")
                                 ok.draw(screen)
                                 prompt.draw(screen)
                                 pygame.display.update()
@@ -294,7 +296,7 @@ class Player:
                             waitingToPayLux = True
                             while waitingToPayLux:
                                 screen.blit(bg, [0, 0])
-                                prompt = button(PLAYERCOLOR[0], 100, 752 * (1 / 3), 754 -200, 100, "Pay Luxury Tax")
+                                prompt = button(BUTTONCOLOR[0], 100, 752 * (1 / 3), 754 -200, 100, "Pay Luxury Tax", 26)
                                 pay75 = button((0, 255, 0), 754 / 2 - (754 * (1 / 4)), 752 / 2, 75, 50, "$75")
                                 prompt.draw(screen)
                                 pay75.draw(screen)
@@ -648,7 +650,8 @@ class Board:
         running = True
         while running:
             screen.blit(bg, [0, 0])  # paint the backgorund image in the back first so it doesnt cover anything
-            startButton = button((0,255,255),752/2 -50, 754, 125, 50, "Start?")
+            startButton = button(BUTTONCOLOR[0],752+30, 50, 250, 70, "Start?")
+            #startButton = button((0,255,255),752/2 -50, 754, 125, 50, "Start?", 36)
             print("Painting Background")  # debug comment
             for event in pygame.event.get():  # end python interpretter if window has been closed
                 pos = pygame.mouse.get_pos()
@@ -669,7 +672,7 @@ class Board:
                 if self.numPlayersChosen == False:
                     print("Drawing howManyPlayers text")
                     pressedKey = pygame.key.get_pressed()
-                    self.howManyPlayers = button((0, 255, 255), 750 / 2 - 375, 754, 750, 50, "How many Players?(2-4)")
+                    self.howManyPlayers = button(BUTTONCOLOR[0], 752+10, 50, 380, 70, "How many Players?(2-4)", 26)
                     self.howManyPlayers.draw(screen)
                     if pressedKey[K_2]:
                         self.numPlayers = 2
