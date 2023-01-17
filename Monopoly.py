@@ -15,7 +15,7 @@ PROPERTYCOLOR = [(94, 54, 117), (211, 233, 247), (174, 45, 127), (248, 129, 26),
 import random
 
 
-class Dice(object):
+class Dice(object):pus
     def __init__(self):
         self.dice1 = random.randint(1, 6)
         self.dice2 = random.randint(1, 6)
@@ -753,7 +753,7 @@ if __name__ == "__main__":
 
         pygame.display.update()
 
-    WinnerButton = button(BUTTONCOLO[0], 752/2, 754/2, 800, 100, "The Winner is Player " + str(gameWinner) + "!!!!!!!!!!")
+    WinnerButton = button(BUTTONCOLOR[0], 752/2, 754/2, 800, 100, "The Winner is Player " + str(gameWinner) + "!!!!!!!!!!")
     WinnerButton.draw(screen)
 
     for p in players:
