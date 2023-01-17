@@ -9,8 +9,9 @@ from communityChest import communityChestCard
 from Chance import Chance
 pygame.init()
 
-PLAYERCOLOR = [(0,   0, 255), (0, 255,   0), (255,   0,   0), (255, 255, 0)] #BLUE, GREEN, RED, YELLOW
-BUTTONCOLOR = [(11,253,114), (0, 255, 0), (255, 0, 0), (192,192,192)]
+PLAYERCOLOR = [(43, 166, 184), (0, 255,   0), (255,   0,   0), (255, 255, 0)] #BLUE, GREEN, RED, YELLOW
+BUTTONCOLOR = [(11, 253, 114), (0, 255, 0), (255, 0, 0), (192,192,192)]
+PROPERTYCOLOR = [(94, 54, 117), (211, 233, 247), (174, 45, 127), (248, 129, 26), (246, 11, 41), (255, 236, 35), (65, 153, 79), (90, 109, 185), (255, 255, 255), (255, 255, 255)]
 import random
 
 
@@ -331,19 +332,19 @@ class Player:
 
     def buyAHouse(self):
         jayarama = True
-        if self.numProperties != 0:
+        while jayarama and self.numProperties != 0:
             pos = pygame.mouse.get_pos()
-            print("jayarama " + str(self.numProperties))
             for property in sideBar:
                 for event in pygame.event.get():
+                    print(event, " is the event ")
                     if event.type == pygame.MOUSEBUTTONDOWN and property.isOver(pos):
+                        print(str(jayarama)) 
                         tempButton = property
-                        print("Houses Index: " + str(EstateDict[propertyIndex]["houses"]))
                         propertyIndex = 0
                         for estate in EstateDict:
                             print(estate)
                             if EstateDict[estate]["estateName"] == property.text.split(':')[0]:
-                                print(tempButton.text)
+                                print("Property found: " + property.text.split(':')[0])
                                 propertyIndex = estate
                         if int(EstateDict[propertyIndex]["houses"]) > 3:
                             jayarama = False
@@ -352,13 +353,13 @@ class Player:
                         if players[theBoard.totalTurnsTaken % theBoard.numPlayers].money >= int(EstateDict[estate]["houseCost"]):
                             print(propertyIndex)
                             jayarama = False
+                            #set a buy house
                             EstateDict[propertyIndex]["houses"] = str(int(EstateDict[propertyIndex]["houses"]) + 1)
                             players[theBoard.totalTurnsTaken % theBoard.numPlayers].money = players[theBoard.totalTurnsTaken % theBoard.numPlayers].money - int(EstateDict[propertyIndex]["houseCost"])
                             print("you bought", EstateDict[propertyIndex]["estateName"])
 
                     property.draw(screen)
                     pygame.display.update()
-                    break
         updateSideBar()
 
     def CheckforChanceOrChest(self):
@@ -432,7 +433,7 @@ class Player:
             print("Position chest", test)
             chance = Chance()
             currentPlayerCard = chance.selectCardforCurrentPlayer()
-
+            #different Playercards
             if (currentPlayerCard.type == 'go To'):
                 if self.position > currentPlayerCard.effect:
                     self.money = self.money + 200
@@ -711,10 +712,11 @@ def updateSideBar():
     sideBar.clear()
     for estate in EstateDict:
         if int(EstateDict[estate]["ownerNumber"]) == (players[(theBoard.totalTurnsTaken % theBoard.numPlayers)].number):
-            e = button(white, 752, pixelcount, 448, 15, EstateDict[estate]["estateName"] + ": " + EstateDict[estate]["houses"], 24)
+            colorGroup = int(EstateDict[estate]["group"])
+            e = button(PROPERTYCOLOR[colorGroup], 752, pixelcount, 448, 20, EstateDict[estate]["estateName"] + ": " + EstateDict[estate]["houses"], 19)
             e.draw(screen)
             sideBar.append(e)
-            pixelcount = pixelcount + 40
+            pixelcount = pixelcount + 20
 
 
 if __name__ == "__main__":
@@ -751,7 +753,7 @@ if __name__ == "__main__":
 
         pygame.display.update()
 
-    WinnerButton = button((255,0,0), 752/2, 754/2, 800, 100, "The Winner is Player " + str(gameWinner) + "!!!!!!!!!!")
+    WinnerButton = button(BUTTONCOLO[0], 752/2, 754/2, 800, 100, "The Winner is Player " + str(gameWinner) + "!!!!!!!!!!")
     WinnerButton.draw(screen)
 
     for p in players:
