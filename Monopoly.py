@@ -15,7 +15,7 @@ PROPERTYCOLOR = [(94, 54, 117), (211, 233, 247), (174, 45, 127), (248, 129, 26),
 import random
 
 
-class Dice(object):pus
+class Dice(object):
     def __init__(self):
         self.dice1 = random.randint(1, 6)
         self.dice2 = random.randint(1, 6)
